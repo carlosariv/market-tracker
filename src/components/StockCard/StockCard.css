@@ -1,0 +1,17 @@
+.stock-card {
+    background-color: white;
+    border: thin solid #E5E7EB;
+    border-radius: 8px;
+    padding: 10px;
+    /* width: 320px;
+    height: 180px; */
+}
+
+.stock-card img {
+    max-width: 40px;
+    height: auto;
+}
+
+.card-symbol {
+    font-weight: 600;
+}
