@@ -1,0 +1,12 @@
+footer {
+    border-top: thin solid lightgrey;
+    justify-content: flex-end;
+}
+
+footer a {
+    color: #6B7280;
+    font-weight: 400;
+    justify-content: center;
+    flex: 1;
+    margin: 10px;
+}
