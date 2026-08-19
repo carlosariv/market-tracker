@@ -11,7 +11,7 @@ export default function LoginPage() {
         } else {
             // Alert to incorrect password
         }
-
+        // Hardcoded password for nows
         if (password == "admin") {
 
         } else {
