@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import './Navbar.css';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <div className="nav-logo">MySite</div>
-      <ul className="nav-links">
-        <li><a href="/Markets">Markets</a></li>
-        <li><a href="/Stocks">Stocks</a></li>
-      </ul>
+      <div className="nav-logo">Market Tracker</div>
+        <nav> <Link to="/Markets">Markets</Link></nav>
+        <nav> <Link to="/Stocks">Stocks</Link></nav>
     </nav>
   );
 }

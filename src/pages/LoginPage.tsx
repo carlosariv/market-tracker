@@ -1,6 +1,6 @@
 
 
-export default function loginPage() {
+export default function LoginPage() {
     return (
         <>
             <label for="username">Username:</label>
@@ -8,7 +8,5 @@ export default function loginPage() {
             <label for="password">password:</label>
             <input type="passord" id="password" name="password"></input>
         </>
-
-
     );
 }
