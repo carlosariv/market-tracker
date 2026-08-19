@@ -7,8 +7,10 @@ function App() {
 
   return (
     <BrowserRouter >
-      <Navbar />
+      
       <Routes>
+        <Route path="/" element={<Navigate to="/pages/LoginPage" replace />} />
+        <Navbar />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter >

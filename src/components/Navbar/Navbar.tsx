@@ -9,6 +9,7 @@ export default function Navbar() {
       <div className="nav-logo">Market Tracker</div>
         <nav> <Link to="/Markets">Markets</Link></nav>
         <nav> <Link to="/Stocks">Stocks</Link></nav>
+         <nav> <Link to="/Logout">Logout</Link></nav>
     </nav>
   );
 }
