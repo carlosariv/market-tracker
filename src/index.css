@@ -1,0 +1,49 @@
+/* ===== Design tokens ===== */
+:root {
+  --font-main: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', 'Palatino Linotype', 'Book Antiqua', serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+
+  --bg: #ffffff;
+  --text: #1f2328;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --accent: #2563eb;
+
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Reset ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ===== Base ===== */
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+#root {
+  min-height: 100vh;
+}
