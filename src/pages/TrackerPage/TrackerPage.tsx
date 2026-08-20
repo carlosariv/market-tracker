@@ -74,5 +74,7 @@ export default function TrackerPage() {
             </div>
             <Footer></Footer>
         </div>
+
+
     )
 }
