@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './LoginPage.css'
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -19,7 +20,8 @@ export default function LoginPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="form-container">
+        <form className = 'login-form' onSubmit={handleSubmit}>
       <h1>Login</h1>
 
       <label htmlFor="username">Username:</label>
@@ -42,5 +44,7 @@ export default function LoginPage() {
 
       <button type="submit">Log in</button>
     </form>
+    </div>
+    
   );
 }

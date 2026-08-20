@@ -5,6 +5,7 @@ import StockCard from "../../components/StockCard/StockCard";
 import "./TrackerPage.css"
 
 export default function TrackerPage() {
+
     return (
         <div>
             <Navbar />
@@ -18,5 +19,7 @@ export default function TrackerPage() {
             </div>
             <Footer></Footer>
         </div>
+
+
     )
 }
