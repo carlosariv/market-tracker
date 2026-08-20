@@ -3,6 +3,7 @@ import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import LoginPage from './pages/login/LoginPage'
 import TrackerPage from './pages/TrackerPage/TrackerPage'
+import StockDetailPage from './pages/StockDetail/StockDetail'
 
 // Auth gate + shared chrome in one layout route.
 // Renders for any child route that matches; <Outlet/> is where the page lands.
@@ -32,7 +33,7 @@ function App() {
         {/* Everything below requires auth and gets shared chrome */}
         <Route element={<ProtectedLayout />}>
           <Route path="/markets" element={<TrackerPage />} />
-          {/* <Route path="/stock/:symbol" element={<StockDetail />} /> */}
+          <Route path="/stocks" element={<StockDetailPage />} />
         </Route>
 
         {/* Unknown URLs bounce to the app (or to /login if not authed) */}

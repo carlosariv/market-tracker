@@ -1,16 +1,17 @@
 // Used for looking up symbols 'apple' -> 'APPL'  
 // https://finnhub.io/docs/api/symbol-search
-const API_KEY = import.meta.env.FINNHUB_API_KEY
+
 
 
 import finnhub from 'finnhub';
 
-const api_key = finnhub.ApiClient.instance.authentications['api_key'];
-api_key.apiKey = API_KEY
-const finnhubClient = new finnhub.DefaultApi()
+const API_KEY = import.meta.env.VITE_FINNHUB_API_KEY;
 
-export async function searchStockSymbol(query: string): Promise<any> {
-    finnhubClient.symbolSearch('AAPL', (error: any, data: any, response: any) => {
+
+const finnhubClient = new finnhub.DefaultApi(API_KEY);
+
+export async function searchStockSymbol(query: string): Promise<void> {
+    finnhubClient.symbolSearch(query, (error: any, data: any, response: any) => {
         console.log("Checking types")
         console.log(typeof (error))
         console.log(typeof (data))

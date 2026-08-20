@@ -5,9 +5,7 @@ import { searchStockSymbol } from "../../services/SymbolLookup";
 
 function StockDetailPage(){
     return(
-        <SearchBar value={""} placeholder={""} onSearch={function (query: string): void {
-            throw new Error("Function not implemented.");
-        } }/>
+        <SearchBar placeholder={"Apple"} onSearch={searchStockSymbol}/>
     );
 }
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 type SearchBarProps = {
     placeholder: string;
-    onSearch: (query: string) => void;
+    onSearch: (query: string) => Promise<any>
 }
 
 export default function SearchBar({
