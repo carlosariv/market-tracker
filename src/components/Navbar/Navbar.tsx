@@ -7,9 +7,9 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="nav-logo">Market Tracker</div>
-        <nav> <Link to="/Markets">Markets</Link></nav>
-        <nav> <Link to="/Stocks">Stocks</Link></nav>
-         <nav> <Link to="/Logout">Logout</Link></nav>
+        <nav> <Link to="/markets">Markets</Link></nav>
+        <nav> <Link to="/stocks">Stocks</Link></nav>
+         <nav> <Link to="/login">Logout</Link></nav>
     </nav>
   );
 }
