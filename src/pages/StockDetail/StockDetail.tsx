@@ -1,10 +1,13 @@
 
 
 
+function findTicker(){
+    
+}
 
 function StockDetailPage(){
     return(
-        
+
     );
 }
 
