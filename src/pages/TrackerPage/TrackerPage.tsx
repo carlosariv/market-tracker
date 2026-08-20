@@ -29,7 +29,6 @@ export default function TrackerPage() {
 
     return (
         <div>
-            <Navbar />
 
             <div className="market-overview">
                 <span style = {{fontWeight:600}}>Market Overview</span>
@@ -72,7 +71,6 @@ export default function TrackerPage() {
                 <StockCard symbol="AAPL" name="Apple inc." price={152.47}></StockCard>
                 <StockCard symbol="AAPL" name="Apple inc." price={152.47}></StockCard>
             </div>
-            <Footer></Footer>
         </div>
 
 
