@@ -6,6 +6,23 @@ import type { stockId } from './SymbolLookup';
 
 const API_KEY = import.meta.env.VITE_FINNHUB_API_KEY;
 const finnhubClient = new finnhub.DefaultApi(API_KEY);
+/*
+Response Attributes:
+
+c Current price
+
+d Change
+
+dp Percent change
+
+h High price of the day
+
+l Low price of the day
+
+o Open price of the day
+
+pc Previous close price
+*/
 
 export interface quote {
   "c": number,
