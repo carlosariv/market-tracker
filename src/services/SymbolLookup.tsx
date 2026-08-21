@@ -33,7 +33,8 @@ function symbolSearchRequest(query: string): Promise<stockId[]> {
 export async function searchStockSymbol(query: string): Promise<stockId[]> {
     try {
         const data = await symbolSearchRequest(query);
-        return data;
+        console.log(data)
+        return data.result
     } catch (err) {
         console.error('Symbol search failed:', err);
         throw err;

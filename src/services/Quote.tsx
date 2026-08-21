@@ -24,19 +24,21 @@ o Open price of the day
 pc Previous close price
 */
 
-export interface quote {
-  "c": number,
-  "h": number,
-  "l": number,
-  "o": number,
-  "pc": number,
-  "t": number 
+export interface Quote {
+    c: number;   // current price
+    d: number;   // change
+    dp: number;  // percent change
+    h: number;   // high of the day
+    l: number;   // low of the day
+    o: number;   // open of the day
+    pc: number;  // previous close
+    t: number;   // trade time (Unix timestamp, seconds)
 }
 
 
-function getQuoteRequest(symbol:string): Promise<quote> {
+function getQuoteRequest(symbol:string): Promise<Quote> {
     return new Promise((resolve, reject) => {
-        finnhubClient.quote(symbol, {}, (error: any, data: any, response: any) => {
+        finnhubClient.quote(symbol, (error: any, data: any, response: any) => {
             if (error) {
                 reject(error);        
             } else {
@@ -46,7 +48,7 @@ function getQuoteRequest(symbol:string): Promise<quote> {
     })
 }
 
-export async function getQuote(symbol:string) : Promise<quote> {
+export async function getQuote(symbol:string) : Promise<Quote> {
     try {
         const data = await getQuoteRequest(symbol)
         return data
