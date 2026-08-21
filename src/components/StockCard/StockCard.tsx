@@ -17,7 +17,7 @@ interface StockCardProps {
 export default function StockCard({stockId, quote} : StockCardProps) {
     return (
         <div className="stock-card">
-            <div className="card-heading">
+            <div className="d-spacer">
                 <div>
                     <img src={sampleLogo} alt="Sample Logo"/>
                     <span className="card-symbol">{stockId.symbol}</span>

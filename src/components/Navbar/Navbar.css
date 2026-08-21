@@ -1,17 +1,31 @@
-.navbar {
+.page-container {
   display: flex;
-
-  justify-content: flex-start;
-  gap: 1rem;
-  padding: 1rem 2rem;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
 }
 
+.content {
 
-.nav-links a {
+}
+
+.navbar {
+  /* display: flex; */
+  /* justify-content: flex-start; */
+  /* gap: 1rem; */
+  /* padding: 1rem 2rem; */
+}
+
+.nav-link {
   text-decoration: none;
   color: black;
+  display: inline-block;
+  padding: 10px;
+  /* background-color: white; */
+  margin: 0px 10px;
 }
 
 .menu-icon {
   display: none;
 }
+

@@ -15,8 +15,3 @@
 .card-symbol {
     font-weight: 600;
 }
-
-.card-heading {
-    display: flex;
-    justify-content: space-between;
-}

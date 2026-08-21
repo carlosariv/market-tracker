@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import StockCard from "../../components/StockCard/StockCard";
 
-import "./TrackerPage.css"
-import SearchBar from "../../components/SearchBar/SearchBar";
 import { getQuote, type Quote } from "../../services/Quote";
 import { searchStockSymbol, type stockId } from "../../services/SymbolLookup";
 
-
-
+import "./TrackerPage.css"
 
 export default function TrackerPage() {
     const filterCategories: Array<string> = [
@@ -33,6 +30,9 @@ export default function TrackerPage() {
     const [testStock, setTestStock] = useState<stockId | null>(null);
     const [testQuote, setTestQuote] = useState<Quote | null>(null);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const paginationSize = 3;
+
     useEffect(() => {
         const loadTestCard = async () => {
             try {
@@ -51,28 +51,24 @@ export default function TrackerPage() {
         loadTestCard();
     }, []);   // empty array = run once after first render
 
+    let maxPages = 10;
 
     return (
         <div>
             <div className="market-overview">
-                <span style={{ fontWeight: 600 }}>Market Overview</span>
+                <span style={{ fontWeight: 600, fontSize: "24px"}}>Market Overview</span>
                 <span>API BUDGET 18/60 this minute</span>
             </div>
 
             <div className="filter-heading">
                 <div>
-                    <SearchBar
-                        placeholder="Filter by company"
-                        onSearch={(query) => { }}
-                    />
-
                     <div className="filter-categories">
                         {
                             filterCategories.map(
                                 (category) => {
                                     return (
                                         <button 
-                                            className={`category ${filterCategory==category ? "active-btn" : ""}`}
+                                            className={`btn ${filterCategory==category ? "active-btn" : ""}`}
                                             key={category}
                                             value={category}
                                             onClick={(e) => {
@@ -109,15 +105,22 @@ export default function TrackerPage() {
                     <StockCard stockId={testStock} quote={testQuote} />
                     </>
                 )}
-                {/* <StockCard symbol="AAPL" name="Apple inc." price={152.47}></StockCard>
-                <StockCard symbol="AAPL" name="Apple inc." price={152.47}></StockCard>
-                <StockCard symbol="AAPL" name="Apple inc." price={152.47}></StockCard>
-                <StockCard symbol="AAPL" name="Apple inc." price={152.47}></StockCard>
-                <StockCard symbol="AAPL" name="Apple inc." price={152.47}></StockCard>
-                <StockCard symbol="AAPL" name="Apple inc." price={152.47}></StockCard> */}
+            </div>
+
+            <div className="d-center">
+                {
+                    Array.from({ length: paginationSize }, (_, index) => Math.max(1, currentPage - 1) + index)
+                        .map((page) => 
+                        <button
+                            key={page}
+                            onClick={(e) => {
+                                setCurrentPage(page);
+                                console.log(page);
+                            }}
+                            className={`btn ${page == currentPage ? "active-btn" : ""}`}
+                        >{page}</button>)
+                }
             </div>
         </div>
-
-
     )
 }

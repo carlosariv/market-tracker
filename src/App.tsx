@@ -5,6 +5,8 @@ import LoginPage from './pages/login/LoginPage'
 import TrackerPage from './pages/TrackerPage/TrackerPage'
 import StockDetailPage from './pages/StockDetail/StockDetail'
 
+import "./styles/main.css"
+
 // Auth gate + shared chrome in one layout route.
 // Renders for any child route that matches; <Outlet/> is where the page lands.
 function ProtectedLayout() {
@@ -17,8 +19,6 @@ function ProtectedLayout() {
   return (
     <>
       <Navbar />
-      <Outlet />
-      <Footer />
     </>
   )
 }
