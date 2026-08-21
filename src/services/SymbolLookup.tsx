@@ -30,6 +30,7 @@ function symbolSearchRequest(query: string): Promise<stockId[]> {
     });
 }
 
+// Returna a list of stock ids
 export async function searchStockSymbol(query: string): Promise<stockId[]> {
     try {
         const data = await symbolSearchRequest(query);
