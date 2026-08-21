@@ -23,7 +23,17 @@
 .filter-heading {
     display: flex;
     justify-content: space-between;
-    /* padding: 30px; */
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.filter-heading input {
+    outline: none;
+    padding: 10px;
+    border-color: #E5E7EB;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .filter-categories {
@@ -31,5 +41,27 @@
 }
 
 .category {
-    margin: 10px;
+    margin: 4px;
+    padding: 10px 18px;
+    border-style: none;
+    border-radius: 4px;
+    background-color: inherit;
 }
+
+.category.active-btn:hover,
+.category.active-btn {
+    background-color: #0E5A54;
+    color: white;
+}
+
+
+.category:hover {
+    background-color: white;
+    color: black;
+}
+
+.category:active {
+    background-color: gray;
+    color: black;
+}
+

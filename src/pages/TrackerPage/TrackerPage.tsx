@@ -26,11 +26,10 @@ export default function TrackerPage() {
 
     const [searchQuery, setSearchQuery] = useState("");
     const [sortOption, setSortOption] = useState("Price");
+    const [filterCategory, setFilterCategory] = useState("All");
 
     return (
         <div>
-            <Navbar />
-
             <div className="market-overview">
                 <span style = {{fontWeight:600}}>Market Overview</span>
                 <span>API BUDGET 18/60 this minute</span>
@@ -49,18 +48,34 @@ export default function TrackerPage() {
                     <div className="filter-categories">
                         {
                             filterCategories.map(
-                                (s) => <button className="category">{s}</button>
+                                (category) => {
+                                    return (
+                                        <button 
+                                            className={`category ${filterCategory==category ? "active-btn" : ""}`}
+                                            key={category}
+                                            value={category}
+                                            onClick={(e) => {
+                                                console.log(e.currentTarget.value);
+                                                setFilterCategory(e.currentTarget.value);
+                                            }}
+                                        >{category}</button>
+                                    );
+                                }
                             )
                         }
                     </div>
                 </div>
 
-                <select name="stock-sort" id="stock-sort-select"
+                <select
+                    name="stock-sort"
+                    id="stock-sort-select"
                     onChange={(e) => {
                         console.log(e.target.value);
                     }}
                 >
-                    {sortOptions.map((opt) => <option value={opt} key={opt}>{opt}</option>)};
+                    {
+                        sortOptions.map((opt) => <option value={opt} key={opt}>Sort: {opt}</option>)
+                    };
                 </select>
             </div>
 
@@ -72,7 +87,6 @@ export default function TrackerPage() {
                 <StockCard symbol="AAPL" name="Apple inc." price={152.47}></StockCard>
                 <StockCard symbol="AAPL" name="Apple inc." price={152.47}></StockCard>
             </div>
-            <Footer></Footer>
         </div>
 
 
