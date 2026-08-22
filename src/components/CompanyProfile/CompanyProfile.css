@@ -1,0 +1,50 @@
+.company-profile {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 480px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.profile-header img {
+    width: 48px;
+    height: 48px;
+}
+
+.profile-ticker {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin: 0 0 16px;
+}
+
+.profile-grid dt {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #64748b;
+}
+
+.profile-grid dd {
+    margin: 0;
+    font-weight: 600;
+}
+
+.profile-link {
+    color: #2563eb;
+    word-break: break-all;
+}
+
+.profile-empty {
+    color: #64748b;
+}

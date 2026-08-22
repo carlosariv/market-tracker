@@ -4,6 +4,7 @@ import { useSearchResults } from "../../context/Context";
 import { useState } from "react";
 import { type CompanyProfile, searchCompanyProfile } from "../../services/CompanyProfile";
 import './StockDetail.css'
+import CompanyProfileCard from "../../components/CompanyProfile/CompanyProfile";
 
 function StockDetailPage() {
     // Storing and setting everything via context here
@@ -46,59 +47,7 @@ function StockDetailPage() {
                 </ul>
             </div>
 
-            <div className="company-profile">
-                {companyProfile ? (
-                    <>
-                        <div className="profile-header">
-                            <img src={companyProfile.logo} alt={`${companyProfile.name} logo`} />
-                            <div>
-                                <h2>{companyProfile.name}</h2>
-                                <span className="profile-ticker">
-                                    {companyProfile.ticker} · {companyProfile.exchange}
-                                </span>
-                            </div>
-                        </div>
-
-                        <dl className="profile-grid">
-                            <div>
-                                <dt>Industry</dt>
-                                <dd>{companyProfile.finnhubIndustry}</dd>
-                            </div>
-                            <div>
-                                <dt>Market Cap</dt>
-                                <dd>${companyProfile.marketCapitalization.toLocaleString()}M</dd>
-                            </div>
-                            <div>
-                                <dt>Shares Out</dt>
-                                <dd>{companyProfile.shareOutstanding.toLocaleString()}M</dd>
-                            </div>
-                            <div>
-                                <dt>IPO</dt>
-                                <dd>{companyProfile.ipo}</dd>
-                            </div>
-                            <div>
-                                <dt>Country</dt>
-                                <dd>{companyProfile.country}</dd>
-                            </div>
-                            <div>
-                                <dt>Phone</dt>
-                                <dd>{companyProfile.phone}</dd>
-                            </div>
-                        </dl>
-
-                        <a
-                            className="profile-link"
-                            href={companyProfile.weburl}
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            {companyProfile.weburl}
-                        </a>
-                    </>
-                ) : (
-                    <p className="profile-empty">Select a stock from the list to view its profile.</p>
-                )}
-            </div>
+           <CompanyProfileCard companyProfile={companyProfile} />
         </>
     );
 }
