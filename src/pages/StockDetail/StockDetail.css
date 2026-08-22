@@ -1,0 +1,21 @@
+.stock-search-list {
+    list-style: none;          /* kill the bullets */
+    padding: 0;
+    margin: 12px 0;
+}
+
+.stock-search-list-item {
+    color: #0E5A54;            /* your brand teal from main.css — or #2563eb for classic link blue */
+    cursor: pointer;           /* the hand cursor — biggest "I'm clickable" signal */
+    padding: 6px 8px;
+    border-radius: 4px;
+}
+
+.stock-search-list-item:hover {
+    text-decoration: underline;   /* the classic link convention */
+    background-color: #f1f5f9;
+}
+
+.stock-search-list-item:active {
+    opacity: 0.7;                /* pressed feedback on click */
+}
