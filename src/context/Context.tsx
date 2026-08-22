@@ -4,8 +4,8 @@ import type { stockId } from "../services/SymbolLookup";
 
 // Stock Search Context
 type StockSearchType = {
-    searchResults: stockId[];
-    setSearchResults: React.Dispatch<React.SetStateAction<stockId[]>>;
+    searchResultsContext: stockId[];
+    setSearchResultsContext: React.Dispatch<React.SetStateAction<stockId[]>>;
 };
 
 const StockSearchContext = createContext<StockSearchType | undefined>(
@@ -17,11 +17,11 @@ export function SearchResultsProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [searchResults, setSearchResults] = useState<stockId[]>([]);
+    const [searchResultsContext, setSearchResultsContext] = useState<stockId[]>([]);
 
     return (
         <StockSearchContext.Provider
-            value={{ searchResults, setSearchResults }}
+            value={{ searchResultsContext, setSearchResultsContext }}
         >
             {children}
         </StockSearchContext.Provider>
