@@ -31,6 +31,10 @@ function StockDetailPage() {
                     ))}
                 </ul>
             </div>
+
+            <div>
+                    
+            </div>
         </>
     );
 }
