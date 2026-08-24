@@ -6,40 +6,47 @@ import TrackerPage from './pages/TrackerPage/TrackerPage'
 import StockDetailPage from './pages/StockDetail/StockDetail'
 
 import "./styles/main.css"
+import { AuthProvider, useAuth } from './components/AuthContext'
+import RegisterPage from './pages/login/RegisterPage'
 
 // Auth gate + shared chrome in one layout route.
 // Renders for any child route that matches; <Outlet/> is where the page lands.
 function ProtectedLayout() {
-  const isAuthenticated = localStorage.getItem('authenticated') === 'true'
+  const {isAuthenticated} = useAuth();
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
   }
 
   return (
-    <>
-      <Navbar />
-    </>
+    <Navbar />
   )
 }
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public page: no navbar/footer */}
-        <Route path="/login" element={<LoginPage />} />
+    <AuthProvider>
+      <div>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Navbar/>}>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/logout" element={<div></div>} />
+            </Route>
 
-        {/* Everything below requires auth and gets shared chrome */}
-        <Route element={<ProtectedLayout />}>
-          <Route path="/markets" element={<TrackerPage />} />
-          <Route path="/stocks" element={<StockDetailPage />} />
-        </Route>
+            {/* Everything below requires auth and gets shared chrome */}
+            <Route element={<ProtectedLayout />}>
+              <Route path="/markets" element={<TrackerPage />} />
+              <Route path="/stocks" element={<StockDetailPage />} />
+            </Route>
 
-        {/* Unknown URLs bounce to the app (or to /login if not authed) */}
-        <Route path="*" element={<Navigate to="/markets" replace />} />
-      </Routes>
-    </BrowserRouter>
+            {/* Unknown URLs bounce to the app (or to /login if not authed) */}
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </AuthProvider>
   )
 }
 
