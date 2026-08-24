@@ -1,7 +1,10 @@
+import { useAuth } from '../AuthContext';
 import './Navbar.css';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
+  const {isAuthenticated, logout} = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="page-container">
@@ -15,10 +18,14 @@ export default function Navbar() {
           </div>
 
           <div>
-            {/* TODO: Conditional rendering for login state */}
-            {/* <Link to="/login">Login</Link> */}
-            {/* <Link to="/login" className="nav-link">Sign Up</Link> */}
-            <Link to="/login" className="nav-link">Logout</Link>
+            { isAuthenticated && 
+              <Link to="/logout" className="nav-link" onClick={(e) => {
+                logout();
+                navigate('/login');
+              }}>Logout</Link>
+            }
+            { (isAuthenticated == false) && <Link to="/register" className="nav-link">Sign Up</Link>}
+            { (isAuthenticated == false) && <Link to="/login" className="nav-link">Login</Link> }
           </div>
         </nav>
 
