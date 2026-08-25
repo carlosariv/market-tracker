@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import LoginPage from './pages/login/LoginPage'
-import TrackerPage from './pages/TrackerPage/TrackerPage'
+import TrackerPage, { TrackerPageV2 } from './pages/TrackerPage/TrackerPage'
 import StockDetailPage from './pages/StockDetail/StockDetail'
 
 import "./styles/main.css"
@@ -38,7 +38,8 @@ function App() {
 
             {/* Everything below requires auth and gets shared chrome */}
             <Route element={<ProtectedLayout />}>
-              <Route path="/markets" element={<TrackerPage />} />
+              {/* <Route path="/markets" element={<TrackerPage />} /> */}
+              <Route path="/markets" element={<TrackerPageV2 />} />
               <Route path="/stocks" element={<StockDetailPage />} />
             </Route>
 

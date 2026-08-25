@@ -9,14 +9,14 @@ type StockSearchType = {
     lastQuoteSearch: Quote | undefined;
 
     // [industry][specific stock]
-    stockCardMarkets: StockCardProps[][];
+    stockCardMarkets: Record<string, StockCardProps[]>
 
     setSearchResultsContext: React.Dispatch<React.SetStateAction<stockId[]>>;
     setSearchQuote: React.Dispatch<
         React.SetStateAction<Quote | undefined>
     >;
 
-    setStockCardMarkets: React.Dispatch<React.SetStateAction<StockCardProps[][]>>;
+    setStockCardMarkets: React.Dispatch<React.SetStateAction<Record<string, StockCardProps[]>>>;
 };
 
 const StockSearchContext = createContext<StockSearchType | undefined>(
@@ -30,7 +30,7 @@ export function SearchResultsProvider({
 }) {
     const [searchResultsContext, setSearchResultsContext] = useState<stockId[]>([]);
     const [lastQuoteSearch, setSearchQuote] = useState<Quote>();
-    const [stockCardMarkets, setStockCardMarkets] = useState<StockCardProps[][]>([]);
+    const [stockCardMarkets, setStockCardMarkets] = useState<Record<string, StockCardProps[]>>({});
     return (
         <StockSearchContext.Provider
             value={{
