@@ -12,7 +12,7 @@ import RegisterPage from './pages/login/RegisterPage'
 // Auth gate + shared chrome in one layout route.
 // Renders for any child route that matches; <Outlet/> is where the page lands.
 function ProtectedLayout() {
-  const {isAuthenticated} = useAuth();
+  const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
@@ -29,8 +29,9 @@ function App() {
       <div>
         <BrowserRouter>
           <Routes>
-            <Route element={<Navbar/>}>
-              <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route element={<Navbar />}>
+
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/logout" element={<div></div>} />
             </Route>
