@@ -1,16 +1,22 @@
 import React, { createContext, useContext, useState } from "react";
 import type { stockId } from "../services/SymbolLookup";
 import type { Quote } from "../services/Quote";
+import type { StockCardProps } from "../components/StockCard/StockCard";
 
 // Stock Search Context
 type StockSearchType = {
     searchResultsContext: stockId[];
     lastQuoteSearch: Quote | undefined;
 
+    // [industry][specific stock]
+    stockCardMarkets: StockCardProps[][];
+
     setSearchResultsContext: React.Dispatch<React.SetStateAction<stockId[]>>;
     setSearchQuote: React.Dispatch<
         React.SetStateAction<Quote | undefined>
     >;
+
+    setStockCardMarkets: React.Dispatch<React.SetStateAction<StockCardProps[][]>>;
 };
 
 const StockSearchContext = createContext<StockSearchType | undefined>(
@@ -24,13 +30,16 @@ export function SearchResultsProvider({
 }) {
     const [searchResultsContext, setSearchResultsContext] = useState<stockId[]>([]);
     const [lastQuoteSearch, setSearchQuote] = useState<Quote>();
+    const [stockCardMarkets, setStockCardMarkets] = useState<StockCardProps[][]>([]);
     return (
         <StockSearchContext.Provider
             value={{
                 searchResultsContext,
                 setSearchResultsContext,
                 lastQuoteSearch,
-                setSearchQuote
+                setSearchQuote,
+                stockCardMarkets,
+                setStockCardMarkets
             }}
         >
             {children}
