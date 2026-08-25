@@ -160,11 +160,11 @@ export function TrackerPageV2() {
     useEffect(() => {
         const loadTestCard = async () => {
             // console.log(stockCardMarkets['APPL'].forEach((p) => console.log(p)))
-
-            if (stockCardMarkets['AAPL'].length == 0) {
+            console.log(stockCardMarkets['PLTR'])
+            if (!stockCardMarkets['PLTR']) {
                 try {
                     console.log("Loading apple peers")
-                    const peers = await getPeers('AAPL')
+                    const peers = await getPeers('PLTR')
                     console.log(peers)
 
 
@@ -181,8 +181,8 @@ export function TrackerPageV2() {
 
                     // Getting variables from context and setting 
 
-                    stockCardMarkets['AAPL'] = stockCards
-                    setStockCardMarkets(prev => ({ ...prev, AAPL: stockCards }));
+                    stockCardMarkets['PLTR'] = stockCards
+                    setStockCardMarkets(prev => ({ ...prev, PLTR: stockCards }));
                 } catch (err) {
                     console.error('Failed to load test card:', err);
                 }
@@ -239,7 +239,7 @@ export function TrackerPageV2() {
 
             <div className="card-grid">
 
-                {(stockCardMarkets['AAPL'] ?? []).map((p) => (
+                {(stockCardMarkets['PLTR'] ?? []).map((p) => (
                     <StockCardCompanyProfile key={p.stockId.symbol} stockId={p.stockId} companyProfile={p.companyProfile} quote={p.quote} />
                 ))}
 
