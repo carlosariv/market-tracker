@@ -84,7 +84,7 @@ export function StockCardCompanyProfile({companyProfile,quote }:StockCardProps){
                             <dt>Shares Out</dt>
                             <dd>{companyProfile.shareOutstanding.toLocaleString()}M</dd>
                         </div>
-                        <div>
+                        {/* <div>
                             <dt>IPO</dt>
                             <dd>{companyProfile.ipo}</dd>
                         </div>
@@ -95,17 +95,17 @@ export function StockCardCompanyProfile({companyProfile,quote }:StockCardProps){
                         <div>
                             <dt>Phone</dt>
                             <dd>{companyProfile.phone}</dd>
-                        </div>
+                        </div> */}
                     </dl>
 
-                    <a
+                    {/* <a
                         className="profile-link"
                         href={companyProfile.weburl}
                         target="_blank"
                         rel="noreferrer"
                     >
                         {companyProfile.weburl}
-                    </a>
+                    </a> */}
                 </>
             ) : (
                 <p className="profile-empty">Select a stock from the list to view its profile.</p>
