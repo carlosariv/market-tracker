@@ -6,7 +6,7 @@ import type { stockId } from '../../services/SymbolLookup';
 import type { Quote } from '../../services/Quote';
 
 
-interface StockCardProps {
+export interface StockCardProps {
     stockId: stockId,
     quote: Quote
 }

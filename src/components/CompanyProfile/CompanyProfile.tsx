@@ -1,11 +1,13 @@
 import type { CompanyProfile } from "../../services/CompanyProfile";
+import type { Quote } from "../../services/Quote";
 import './CompanyProfile.css'
 
-type CompanyProfileCardProps = {
+export type CompanyProfileCardProps = {
     companyProfile?: CompanyProfile;   // optional, see below
+    quote?: Quote;
 };
 
-export default function CompanyProfileCard({ companyProfile }: CompanyProfileCardProps) {
+export default function CompanyProfileCard({ companyProfile, quote }: CompanyProfileCardProps) {
     return (
         <div className="company-profile">
             {companyProfile ? (
@@ -18,6 +20,21 @@ export default function CompanyProfileCard({ companyProfile }: CompanyProfileCar
                                 {companyProfile.ticker} · {companyProfile.exchange}
                             </span>
                         </div>
+                        {quote && (
+                            <div className="quote-current">
+                                <div className="quote-price">
+                                    ${quote.c.toFixed(2)}
+                                </div>
+
+                                <div className={`quote-change ${quote.d >= 0 ? "positive" : "negative"}`}>
+                                    {quote.d >= 0 ? "+" : ""}
+                                    {quote.d.toFixed(2)}
+                                    {" "}
+                                    ({quote.dp >= 0 ? "+" : ""}
+                                    {quote.dp.toFixed(2)}%)
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     <dl className="profile-grid">

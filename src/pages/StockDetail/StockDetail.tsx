@@ -5,10 +5,11 @@ import { useState } from "react";
 import { type CompanyProfile, searchCompanyProfile } from "../../services/CompanyProfile";
 import './StockDetail.css'
 import CompanyProfileCard from "../../components/CompanyProfile/CompanyProfile";
+import { getQuote, type Quote } from "../../services/Quote";
 
 function StockDetailPage() {
     // Storing and setting everything via context here
-    const { searchResultsContext, setSearchResultsContext } = useSearchResults();
+    const { searchResultsContext, setSearchResultsContext} = useSearchResults();
 
     const handleSearch = async (query: string) => {
         const listStockIds = await searchStockSymbol(query);
@@ -18,12 +19,15 @@ function StockDetailPage() {
 
     // Eventually throw all of this in context for persistent look up 
     const [companyProfile, setCompanyProfile] = useState<CompanyProfile>()
+    const [companyQuote, setCompanyQuote] = useState<Quote>();
 
     // Making each item on the list a clickable item
     const handleCompanyClick = async (stock: stockId) => {
         const companyProfile = await searchCompanyProfile(stock.symbol)
-        console.log(companyProfile)
+        const stockQuote = await getQuote(companyProfile.ticker)
+
         setCompanyProfile(companyProfile)
+        setCompanyQuote(stockQuote)
     }
 
     return (
@@ -47,9 +51,13 @@ function StockDetailPage() {
                 </ul>
             </div>
 
-           <CompanyProfileCard companyProfile={companyProfile} />
+           <CompanyProfileCard companyProfile={companyProfile} quote={companyQuote} />
         </>
     );
 }
 
 export default StockDetailPage;
+
+function setSearchQuote(stockQuote: Quote) {
+    throw new Error("Function not implemented.");
+}
