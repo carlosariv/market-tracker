@@ -3,7 +3,7 @@ import { useSearchResults } from "../../context/Context"
 import { getMarketNews } from "../../services/MarketNews"
 import MarketNewsCard from "../MarketNews/MarketNews"
 
-export default function (category: string) {
+export default function MarketNewsBlock({ category }: { category: string }) {
     const { searchMarketNews, setSearchMarketNews } = useSearchResults()
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export default function (category: string) {
 
     return (
         <div className="market-news-block">
-            {searchMarketNews[category].map((m) => (
+            {(searchMarketNews[category] ?? []).map((m) => (
                 <MarketNewsCard key={m.id} news={m} />
             ))}
         </div>
