@@ -2,8 +2,6 @@
 // https://finnhub.io/docs/api/company-peers
 
 import finnhub from 'finnhub';
-import type { stockId } from './SymbolLookup';
-
 const API_KEY = import.meta.env.VITE_FINNHUB_API_KEY;
 const finnhubClient = new finnhub.DefaultApi(API_KEY);
 
