@@ -1,11 +1,12 @@
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { searchStockSymbol, type stockId } from "../../services/SymbolLookup";
 import { useSearchResults } from "../../context/Context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { type CompanyProfile, searchCompanyProfile } from "../../services/CompanyProfile";
 import './StockDetail.css'
 import CompanyProfileCard from "../../components/CompanyProfile/CompanyProfile";
 import { getQuote, type Quote } from "../../services/Quote";
+import type { StockCardProps } from "../../components/StockCard/StockCard";
 
 function StockDetailPage() {
     // Storing and setting everything via context here
@@ -15,7 +16,29 @@ function StockDetailPage() {
         searchStockCard,
         setSearchStockCard,
         watchlist,
-        setWatchlist } = useSearchResults();
+        setWatchlist,
+        requestStock,
+        loadedStocks,
+        symbolQueue
+    } = useSearchResults();
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [symbolRequested, setSymbolRequested] = useState('');
+
+    useEffect(() => {
+        if (!isLoading || symbolRequested=='') {
+            return;
+        }
+
+        let stock: StockCardProps | undefined = loadedStocks.find((stock: StockCardProps, index: number, array: StockCardProps[]) => {
+            return stock.stockId.symbol==symbolRequested;
+        })
+
+        if (stock) {
+            setSearchStockCard(stock);
+            setIsLoading(false);
+        }
+    }, [isLoading, loadedStocks, symbolQueue]);
 
     const handleSearch = async (query: string) => {
         const listStockIds = await searchStockSymbol(query);
@@ -23,30 +46,22 @@ function StockDetailPage() {
     };
 
 
-
     // Making each item on the list a clickable item
     const handleCompanyClick = async (stock: stockId) => {
         try {
-            const companyProfile = await searchCompanyProfile(stock.symbol)
-            const stockQuote = await getQuote(companyProfile.ticker)
-
-            const stockCardProps = { stockId: stock, companyProfile: companyProfile, quote: stockQuote }
-            setSearchStockCard(stockCardProps)
+            requestStock(stock.symbol, 100);
+            setIsLoading(true);
+            setSymbolRequested(stock.symbol);
         } catch (error) {
             console.log(error)
         }
-
-
     }
 
     const handleAddAsset = () => {
-
         if (searchStockCard && !watchlist.includes(searchStockCard)) {
-
             setWatchlist([...watchlist, searchStockCard])
         }
         console.log(watchlist)
-
     }
 
     return (
@@ -58,7 +73,7 @@ function StockDetailPage() {
             <div className="stock-detail-layout">
                 <div className="stock-detail-left">
                     <SearchBar
-                        placeholder={"Apple"}
+                        placeholder={"Search for stock..."}
                         onSearch={handleSearch}
                     />
 
@@ -96,4 +111,5 @@ export default StockDetailPage;
 
 function setSearchQuote(stockQuote: Quote) {
     throw new Error("Function not implemented.");
+
 }
