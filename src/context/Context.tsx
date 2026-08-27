@@ -1,22 +1,26 @@
 import React, { createContext, useContext, useState } from "react";
 import type { stockId } from "../services/SymbolLookup";
-import type { Quote } from "../services/Quote";
 import type { StockCardProps } from "../components/StockCard/StockCard";
 
 // Stock Search Context
 type StockSearchType = {
+    // This stores the search list on stock detail
     searchResultsContext: stockId[];
-    lastQuoteSearch: Quote | undefined;
 
+    // Store the last company profile searched for stock detail
+    searchStockCard: StockCardProps | undefined
+
+    // Stores the trackerpagev2 stock grid
     // [industry][specific stock]
     stockCardMarkets: Record<string, StockCardProps[]>
 
-    setSearchResultsContext: React.Dispatch<React.SetStateAction<stockId[]>>;
-    setSearchQuote: React.Dispatch<
-        React.SetStateAction<Quote | undefined>
-    >;
+    // Context watchlist
+    watchlist: StockCardProps[]
 
+    setSearchResultsContext: React.Dispatch<React.SetStateAction<stockId[]>>;
+    setSearchStockCard: React.Dispatch<React.SetStateAction<StockCardProps | undefined>>;
     setStockCardMarkets: React.Dispatch<React.SetStateAction<Record<string, StockCardProps[]>>>;
+    setWatchlist: React.Dispatch<React.SetStateAction<StockCardProps[]>>;
 };
 
 const StockSearchContext = createContext<StockSearchType | undefined>(
@@ -29,17 +33,20 @@ export function SearchResultsProvider({
     children: React.ReactNode;
 }) {
     const [searchResultsContext, setSearchResultsContext] = useState<stockId[]>([]);
-    const [lastQuoteSearch, setSearchQuote] = useState<Quote>();
+    const [searchStockCard, setSearchStockCard] = useState<StockCardProps>();
     const [stockCardMarkets, setStockCardMarkets] = useState<Record<string, StockCardProps[]>>({});
+    const [watchlist, setWatchlist] = useState<StockCardProps[]>([])
     return (
         <StockSearchContext.Provider
             value={{
                 searchResultsContext,
                 setSearchResultsContext,
-                lastQuoteSearch,
-                setSearchQuote,
+                searchStockCard,
+                setSearchStockCard,
                 stockCardMarkets,
-                setStockCardMarkets
+                setStockCardMarkets,
+                watchlist,
+                setWatchlist
             }}
         >
             {children}

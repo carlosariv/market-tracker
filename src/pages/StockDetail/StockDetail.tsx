@@ -9,25 +9,34 @@ import { getQuote, type Quote } from "../../services/Quote";
 
 function StockDetailPage() {
     // Storing and setting everything via context here
-    const { searchResultsContext, setSearchResultsContext} = useSearchResults();
+    const {
+        searchResultsContext,
+        setSearchResultsContext,
+        searchStockCard,
+        setSearchStockCard,
+        watchlist,
+        setWatchlist } = useSearchResults();
 
     const handleSearch = async (query: string) => {
         const listStockIds = await searchStockSymbol(query);
-
         setSearchResultsContext(listStockIds);
     };
 
-    // Eventually throw all of this in context for persistent look up 
-    const [companyProfile, setCompanyProfile] = useState<CompanyProfile>()
-    const [companyQuote, setCompanyQuote] = useState<Quote>();
+
 
     // Making each item on the list a clickable item
     const handleCompanyClick = async (stock: stockId) => {
         const companyProfile = await searchCompanyProfile(stock.symbol)
         const stockQuote = await getQuote(companyProfile.ticker)
 
-        setCompanyProfile(companyProfile)
-        setCompanyQuote(stockQuote)
+        const stockCardProps = {stockId: stock, companyProfile: companyProfile, quote: stockQuote}
+        setSearchStockCard(stockCardProps)
+
+    }
+
+    const handleAddAsset = () => {
+        // const stockCardProps = {stockId: }
+        // setWatchlist(prev => ({...prev, }))
     }
 
     return (
@@ -51,7 +60,14 @@ function StockDetailPage() {
                 </ul>
             </div>
 
-           <CompanyProfileCard companyProfile={companyProfile} quote={companyQuote} />
+            {searchStockCard ? (
+                <CompanyProfileCard
+                    companyProfile={searchStockCard.companyProfile}
+                    quote={searchStockCard.quote}
+                />
+            ) : (<p className="profile-empty">Select a stock from the list to view its profile.</p>)}
+
+            <button className="add-to-watchlist" onClick={handleAddAsset}>Add to Watchlist</button>
         </>
     );
 }
