@@ -25,13 +25,13 @@ export function TrackerPage() {
     ];
 
     const sortOptions: Array<string> = [
+        "Alphabet",
         "Price",
         "Change",
         "Change %",
-        "Volume"
     ];
 
-    const [sortOption, setSortOption] = useState("Price");
+    const [sortOption, setSortOption] = useState("Alphabet");
     const [filterCategory, setFilterCategory] = useState("All");
     const [testStock, setTestStock] = useState<stockId | null>(null);
     const [testQuote, setTestQuote] = useState<Quote | null>(null);
@@ -44,12 +44,31 @@ export function TrackerPage() {
     const cardIndexStart = cardsPerPage * (currentPage - 1);
     const cardIndexEnd   = Math.min(cardIndexStart + cardsPerPage, loadedStocks.length - 1);
 
+    const sorter: (a: StockCardProps, b: StockCardProps) => number = (() => {
+        switch (sortOption) {
+            default:
+            case "Alphabet":
+                return (a: StockCardProps, b: StockCardProps): number => {
+                    return a.companyProfile!.name.localeCompare(b.companyProfile!.name);
+                }
+            case "Price":
+                return (a: StockCardProps, b: StockCardProps): number => {
+                    return b.quote.c - a.quote.c;
+                };
+            case "Change":
+                return (a: StockCardProps, b: StockCardProps): number => {
+                    return b.quote.d - a.quote.d;
+                }
+            case "Change %":
+                return (a: StockCardProps, b: StockCardProps): number => {
+                    return b.quote.dp - a.quote.dp;
+                }
+        }
+    })();
+
     const visibleCards: StockCardProps[] = loadedStocks
         .filter((card) => filterCategory=="All" || (card.companyProfile?.finnhubIndustry===filterCategory))
-        .sort((a: StockCardProps, b: StockCardProps) : number => {
-            // TODO: Sort handlers
-            return b.quote.pc - a.quote.pc;
-        })
+        .sort(sorter)
         .slice(cardIndexStart, cardIndexEnd);
 
     return (
@@ -71,7 +90,6 @@ export function TrackerPage() {
                                             key={category}
                                             value={category}
                                             onClick={(e) => {
-                                                console.log(e.currentTarget.value);
                                                 setFilterCategory(e.currentTarget.value);
                                             }}
                                         >{category}</button>
