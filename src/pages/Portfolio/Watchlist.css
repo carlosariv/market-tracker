@@ -54,3 +54,40 @@
 
     height: 30px;
 }
+
+.portfolio-analysis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin: 40px 40px 0;
+    background-color: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+}
+
+.portfolio-analysis .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.portfolio-analysis .stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+.portfolio-analysis .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.portfolio-analysis .positive {
+    color: #16a34a;
+}
+
+.portfolio-analysis .negative {
+    color: #dc2626;
+}

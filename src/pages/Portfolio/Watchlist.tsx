@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StockCardCompanyProfile, type StockCardProps } from "../../components/StockCard/StockCard";
 import { useSearchResults } from "../../context/Context";
 import './Watchlist.css'
 
 
-function equalWeightPL(watchlist: StockCardProps[]): number {
+function calculateEqualWeightPL(watchlist: StockCardProps[]): number {
     // Calculate equal weight profit loss avg(dp) percent
     var sum = 0;
     watchlist.forEach((s) => {
@@ -13,7 +13,7 @@ function equalWeightPL(watchlist: StockCardProps[]): number {
     return sum / watchlist.length
 }
 
-function marketCapWeightedReturn(watchlist: StockCardProps[]): number {
+function calculateMarketCapWeightedReturn(watchlist: StockCardProps[]): number {
     var sumMcapWeighted = 0
     var sumMcap = 0
 
@@ -31,7 +31,15 @@ function marketCapWeightedReturn(watchlist: StockCardProps[]): number {
 export default function Watchlist() {
     const { watchlist } = useSearchResults();
 
+    const [equalWeightPL, setEqualWeightPL] = useState(0)
+    const [marketCapWeightedReturn, setMarketCapWeightedReturn] = useState(0)
+
     useEffect(() => {
+
+        if(watchlist){
+            setEqualWeightPL(calculateEqualWeightPL(watchlist))
+            setMarketCapWeightedReturn(calculateMarketCapWeightedReturn(watchlist))
+        }
 
     }, [watchlist])
 
@@ -39,7 +47,18 @@ export default function Watchlist() {
 
         <div className="watchlist">
             <div className="portfolio-analysis">
-
+                <div className="stat">
+                    <span className="stat-label">Equal Weight P&L</span>
+                    <span className={`stat-value ${equalWeightPL >= 0 ? "positive" : "negative"}`}>
+                        {equalWeightPL > 0 ? "+" : ""}{equalWeightPL.toFixed(2)}%
+                    </span>
+                </div>
+                <div className="stat">
+                    <span className="stat-label">Mcap Weighted Return</span>
+                    <span className={`stat-value ${marketCapWeightedReturn >= 0 ? "positive" : "negative"}`}>
+                        {marketCapWeightedReturn > 0 ? "+" : ""}{marketCapWeightedReturn.toFixed(2)}%
+                    </span>
+                </div>
             </div>
 
             <div className="card-grid">
