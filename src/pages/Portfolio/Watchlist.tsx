@@ -27,18 +27,42 @@ function calculateMarketCapWeightedReturn(watchlist: StockCardProps[]): number {
     return sumMcapWeighted / sumMcap
 }
 
+function getBestPerformer(watchlist: StockCardProps[]): StockCardProps | undefined {
+    let currentMax: StockCardProps | undefined = undefined
+    watchlist.forEach((s) => {
+        if (!currentMax || s.quote.dp > currentMax.quote.dp) {
+            currentMax = s
+        }
+    })
+    return currentMax
+}
+
+function getWorstPerformer(watchlist: StockCardProps[]): StockCardProps | undefined {
+    if(watchlist.length == 0) return undefined
+    let currentMin = watchlist[0]
+    watchlist.forEach((s) => {
+        if (!currentMin || s.quote.dp < currentMin.quote.dp) {
+            currentMin = s
+        }
+    })
+    return currentMin
+}
 
 export default function Watchlist() {
     const { watchlist } = useSearchResults();
 
     const [equalWeightPL, setEqualWeightPL] = useState(0)
     const [marketCapWeightedReturn, setMarketCapWeightedReturn] = useState(0)
+    const [bestPerformer, setBestPerformer] = useState<StockCardProps | undefined>(undefined)
+    const [worstPerformer, setWorstPerfomer] = useState<StockCardProps | undefined>(undefined)
 
     useEffect(() => {
 
-        if(watchlist){
+        if (watchlist) {
             setEqualWeightPL(calculateEqualWeightPL(watchlist))
             setMarketCapWeightedReturn(calculateMarketCapWeightedReturn(watchlist))
+            setBestPerformer(getBestPerformer(watchlist))
+            setWorstPerfomer(getWorstPerformer(watchlist))
         }
 
     }, [watchlist])
@@ -57,6 +81,18 @@ export default function Watchlist() {
                     <span className="stat-label">Mcap Weighted Return</span>
                     <span className={`stat-value ${marketCapWeightedReturn >= 0 ? "positive" : "negative"}`}>
                         {marketCapWeightedReturn > 0 ? "+" : ""}{marketCapWeightedReturn.toFixed(2)}%
+                    </span>
+                </div>
+                <div className="stat">
+                    <span className="stat-label">Best Perfomer</span>
+                    <span className={`stat-value`}>
+                        {bestPerformer ? bestPerformer.stockId.symbol: "Portofolio is empty"}
+                    </span>
+                </div>
+                <div className="stat">
+                    <span className="stat-label">Worst Perfomer</span>
+                    <span className={`stat-value`}>
+                        {worstPerformer ? worstPerformer.stockId.symbol  : "Portofolio is empty"}
                     </span>
                 </div>
             </div>
