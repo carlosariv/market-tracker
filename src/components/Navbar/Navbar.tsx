@@ -14,6 +14,7 @@ export default function Navbar() {
             <span className="nav-logo" style={{ fontWeight: 700, fontSize: "20px" }}>Market Tracker</span>
             <Link to="/markets" className="nav-link">Markets</Link>
             <Link to="/stocks" className="nav-link">Stocks</Link>
+            <Link to="/watchlist" className="nav-link">Watchlist</Link>
             {/* <Link to="/watchlist" className="nav-link">Watchlist</Link> */}
           </div>
 
