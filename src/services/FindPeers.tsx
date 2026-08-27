@@ -7,9 +7,9 @@ const finnhubClient = new finnhub.DefaultApi(API_KEY);
 
 function getPeersRequest(symbol: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
-        finnhubClient.companyPeers(symbol, {}, (error: any, data:any, response:any) => {
+        finnhubClient.companyPeers(symbol, {}, (error: any, data: any, response: any) => {
             if (error) {
-                reject(error);        
+                reject(error);
             } else {
                 resolve(data);
             }
@@ -17,8 +17,8 @@ function getPeersRequest(symbol: string): Promise<string[]> {
     })
 }
 
-export async function getPeers(symbol:string): Promise<string[]> {
-     try {
+export async function getPeers(symbol: string): Promise<string[]> {
+    try {
         const data = await getPeersRequest(symbol)
         console.log(data)
         return data
