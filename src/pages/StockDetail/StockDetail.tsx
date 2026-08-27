@@ -50,8 +50,8 @@ function StockDetailPage() {
     }
 
     return (
-        <>
-            <div>
+        <div className="stock-detail-layout">
+            <div className="stock-detail-left">
                 <SearchBar
                     placeholder={"Apple"}
                     onSearch={handleSearch}
@@ -70,15 +70,19 @@ function StockDetailPage() {
                 </ul>
             </div>
 
-            {searchStockCard ? (
-                <CompanyProfileCard
-                    companyProfile={searchStockCard.companyProfile}
-                    quote={searchStockCard.quote}
-                />
-            ) : (<p className="profile-empty">Select a stock from the list to view its profile.</p>)}
+            <div className="stock-detail-right">
+                {searchStockCard ? (
+                    <CompanyProfileCard
+                        companyProfile={searchStockCard.companyProfile}
+                        quote={searchStockCard.quote}
+                    />
+                ) : (<p className="profile-empty">Select a stock from the list to view its profile.</p>)}
 
-            <button className="add-to-watchlist" onClick={handleAddAsset}>Add to Watchlist</button>
-        </>
+                {searchStockCard && (
+                    <button className="add-to-watchlist" onClick={handleAddAsset}>Add to Watchlist</button>
+                )}
+            </div>
+        </div>
     );
 }
 
