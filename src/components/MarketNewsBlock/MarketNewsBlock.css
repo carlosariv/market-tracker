@@ -1,0 +1,10 @@
+.market-news-block {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.market-news-block .market-news {
+    max-width: none;
+}

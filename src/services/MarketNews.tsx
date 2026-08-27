@@ -23,7 +23,7 @@ function marketNewsRequest(category: string): Promise<MarketNews[]> {
             if (error) {
                 reject(error);        
             } else {
-                resolve(data);
+                resolve(data.slice(0,5));
             }
         })
     })

@@ -123,6 +123,8 @@ export function TrackerPage() {
 
             </div>
 
+            <MarketNewsBlock category={filterCategory} />
+
             <div className="d-center">
                 <button 
                     className="btn"
@@ -152,9 +154,9 @@ export function TrackerPage() {
                             setCurrentPage(prev => prev + 1);
                         }
                     }
-                }> R </button>
+                 }> R </button>
             </div>
-            <MarketNewsBlock category={filterCategory} />
+            
         </div>
     )
 }
