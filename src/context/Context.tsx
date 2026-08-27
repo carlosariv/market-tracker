@@ -3,6 +3,7 @@ import type { stockId } from "../services/SymbolLookup";
 import type { StockCardProps } from "../components/StockCard/StockCard";
 import { searchCompanyProfile } from "../services/CompanyProfile";
 import { getQuote } from "../services/Quote";
+import type { CompanyNews } from "../services/CompanyNews";
 
 const defaultSymbols: string[] = [
     "AAPL", "MSFT", "NVDA", "GOOGL", "META", "AMZN", "AVGO", "ORCL", "AMD", "CRM", "PLTR",
@@ -32,12 +33,16 @@ type StockSearchType = {
     // Queue for stock symbols to be loaded
     stockQueue: string[];
 
+    // Store the last company news cards
+    searchCompanyNews: CompanyNews[]
+
     setSearchResultsContext: React.Dispatch<React.SetStateAction<stockId[]>>;
     setSearchStockCard: React.Dispatch<React.SetStateAction<StockCardProps | undefined>>;
     setStockCardMarkets: React.Dispatch<React.SetStateAction<Record<string, StockCardProps[]>>>;
     setWatchlist: React.Dispatch<React.SetStateAction<StockCardProps[]>>;
     setStockQueue: React.Dispatch<React.SetStateAction<string[]>>;
     setLoadedStocks: React.Dispatch<React.SetStateAction<StockCardProps[]>>;
+    setSearchCompanyNews: React.Dispatch<React.SetStateAction<CompanyNews[]>>;
 };
 
 const StockSearchContext = createContext<StockSearchType | undefined>(
@@ -55,6 +60,7 @@ export function SearchResultsProvider({
     const [searchStockCard, setSearchStockCard] = useState<StockCardProps>();
     const [stockCardMarkets, setStockCardMarkets] = useState<Record<string, StockCardProps[]>>({});
     const [watchlist, setWatchlist] = useState<StockCardProps[]>([])
+    const [searchCompanyNews, setSearchCompanyNews] = useState<CompanyNews[]>([])
 
     const [symbolQueue, setSymbolQueue] = useState<string[]>(defaultSymbols);
     const [loadedStocks, setLoadedStocks] = useState<StockCardProps[]>([]);
@@ -120,7 +126,9 @@ export function SearchResultsProvider({
                 loadedStocks,
                 setLoadedStocks,
                 stockQueue: symbolQueue,
-                setStockQueue: setSymbolQueue
+                setStockQueue: setSymbolQueue,
+                searchCompanyNews,
+                setSearchCompanyNews
             }}
         >
             {children}

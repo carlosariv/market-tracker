@@ -86,6 +86,8 @@ function StockDetailPage() {
                     {searchStockCard && (
                         <button className="add-to-watchlist" onClick={handleAddAsset}>Add to Watchlist</button>
                     )}
+
+                    
                 </div>
             </div>
         </div>

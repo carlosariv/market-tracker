@@ -1,0 +1,40 @@
+.company-news {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 600px;
+}
+
+.news-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.news-header img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.news-meta {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.news-summary {
+    margin: 0 0 16px;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.news-link {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.news-empty {
+    color: #64748b;
+}
