@@ -3,7 +3,6 @@ import type { stockId } from "../services/SymbolLookup";
 import type { StockCardProps } from "../components/StockCard/StockCard";
 import { searchCompanyProfile } from "../services/CompanyProfile";
 import { getQuote } from "../services/Quote";
-import type { CompanyNews } from "../services/CompanyNews";
 
 const defaultSymbols: string[] = [
     "AAPL", "MSFT", "NVDA", "GOOGL", "META", "AMZN", "AVGO", "ORCL", "AMD", "CRM", "PLTR",
@@ -33,25 +32,13 @@ type StockSearchType = {
     // Queue for stock symbols to be loaded
     stockQueue: string[];
 
-
-
-
-    // Store company news
-    searchCompanyNews: CompanyNews[]
-
-    requestStock : (symbol: string, priority: number) => void;
     setSearchResultsContext: React.Dispatch<React.SetStateAction<stockId[]>>;
     setSearchStockCard: React.Dispatch<React.SetStateAction<StockCardProps | undefined>>;
     setStockCardMarkets: React.Dispatch<React.SetStateAction<Record<string, StockCardProps[]>>>;
     setWatchlist: React.Dispatch<React.SetStateAction<StockCardProps[]>>;
+    setStockQueue: React.Dispatch<React.SetStateAction<string[]>>;
     setLoadedStocks: React.Dispatch<React.SetStateAction<StockCardProps[]>>;
-    setSearchCompanyNews: React.Dispatch<React.SetStateAction<CompanyNews[]>>;
 };
-
-type SymbolRequest = {
-    symbol: string;
-    priority: number;
-}
 
 const StockSearchContext = createContext<StockSearchType | undefined>(
     undefined
@@ -62,84 +49,62 @@ export function SearchResultsProvider({
 }: {
     children: React.ReactNode;
 }) {
+
+
     const [searchResultsContext, setSearchResultsContext] = useState<stockId[]>([]);
     const [searchStockCard, setSearchStockCard] = useState<StockCardProps>();
     const [stockCardMarkets, setStockCardMarkets] = useState<Record<string, StockCardProps[]>>({});
     const [watchlist, setWatchlist] = useState<StockCardProps[]>([])
-    const [searchCompanyNews, setSearchCompanyNews] = useState<CompanyNews[]>([])
 
-    const processingRef = useRef(false);
-    const [processing, setProcessing] = useState<boolean>(false);
-    const [queueVersion, setQueueVersion] = useState(0);
-    const symbolQueue = useRef(
-        new PriorityQueue<SymbolRequest>(
-            (a: SymbolRequest, b: SymbolRequest) => {
-                return b.priority - a.priority;
-            },
-            defaultSymbols.map((s: string) => { return { symbol: s, priority: 1 } })
-        )
-    );
-
+    const [symbolQueue, setSymbolQueue] = useState<string[]>(defaultSymbols);
     const [loadedStocks, setLoadedStocks] = useState<StockCardProps[]>([]);
+    const [processing, setProcessing] = useState<boolean>(false);
 
-    function requestStock(symbol: string, priority: number = 0) {
-        //NOTE: Don't load a stock if already loaded
-        if (loadedStocks.some((stock: StockCardProps, index: number, array: StockCardProps[]) => stock.stockId.symbol == symbol)) {
-            return;
-        }
+    const queueRef = useRef(symbolQueue);
+    queueRef.current = symbolQueue;
 
-        symbolQueue.current.push({symbol, priority});
-        setQueueVersion(prev => prev + 1);
-        console.log(`requesting ${symbol}`);
-        console.log(`new queue size ${symbolQueue.current.size()}`);
-    }
+    useEffect(() => {
+        queueRef.current = symbolQueue;
+    });
 
     const loadStockNext = useCallback(async () => {
-        if (processingRef.current) {
-            return;
-        }
-
-        if (symbolQueue.current.isEmpty()) {
+        if (queueRef.current.length == 0) {
             console.log('queue finished');
+            setProcessing(false);
             return;
         }
 
-        processingRef.current = true;
         setProcessing(true);
-        const symbolReq = symbolQueue.current.front()!;
+        const symbol = queueRef.current[0];
 
-        console.log(`processing: ${symbolReq.symbol}`);
+        console.log(`processing: ${symbol}`);
+        console.log('queue before: ', queueRef.current);
 
-        try {
-            symbolQueue.current.pop();
+        let stockCard: StockCardProps = {
+            stockId: { description: "", displaySymbol: "", symbol: symbol, type: "" },
+            companyProfile: await searchCompanyProfile(symbol),
+            quote: await getQuote(symbol),
+        };
 
-            let stockCard: StockCardProps = {
-                stockId: { description: "", displaySymbol: "", symbol: symbolReq.symbol, type: "" },
-                companyProfile: await searchCompanyProfile(symbolReq.symbol),
-                quote: await getQuote(symbolReq.symbol)
-            };
+        await new Promise((resolve) => setTimeout(resolve, 2000));
 
-            console.log(symbolQueue.current.size());
+        setLoadedStocks(prev => [...prev, stockCard]);
+        setSymbolQueue(prevQueue => prevQueue.slice(1));
+        setProcessing(false);
 
-            //NOTE: Delay only if priority is low
-            if (symbolReq.priority < 10) {
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-            }
-
-            setLoadedStocks(prev => [...prev, stockCard]);
-        } catch (e) {
-        } finally {
-            processingRef.current = false;
-            setProcessing(false);
-        }
+        console.log('finished');
     }, []);
 
     useEffect(() => {
-        console.log(`processing: ${processing}`);
-        if (!symbolQueue.current.isEmpty()) {
+        console.log('checking the queue for processing?')
+        if (symbolQueue.length > 0 && !processing) {
             loadStockNext();
         }
-    }, [processing, queueVersion, loadStockNext]);
+        console.log('done checking the queue for processing?')
+
+        console.log(loadedStocks);
+    }, [symbolQueue.length, processing, loadStockNext]);
+
 
     return (
         <StockSearchContext.Provider
@@ -155,9 +120,7 @@ export function SearchResultsProvider({
                 loadedStocks,
                 setLoadedStocks,
                 stockQueue: symbolQueue,
-                setStockQueue: setSymbolQueue,
-                searchCompanyNews,
-                setSearchCompanyNews
+                setStockQueue: setSymbolQueue
             }}
         >
             {children}
