@@ -20,7 +20,7 @@ export interface stockId {
 
 function symbolSearchRequest(query: string): Promise<stockId[]> {
     return new Promise((resolve, reject) => {
-        finnhubClient.symbolSearch(query, {}, (error: any, data: any, response: any) => {
+        finnhubClient.symbolSearch(query, {exchange: 'US'}, (error: any, data: any, response: any) => {
             if (error) {
                 reject(error);        // error path -> becomes a rejection
             } else {
