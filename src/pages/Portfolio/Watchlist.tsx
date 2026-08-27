@@ -6,6 +6,7 @@ import './Watchlist.css'
 
 function calculateEqualWeightPL(watchlist: StockCardProps[]): number {
     // Calculate equal weight profit loss avg(dp) percent
+    if(watchlist.length == 0) return 0;
     var sum = 0;
     watchlist.forEach((s) => {
         sum += s.quote.dp
@@ -14,6 +15,7 @@ function calculateEqualWeightPL(watchlist: StockCardProps[]): number {
 }
 
 function calculateMarketCapWeightedReturn(watchlist: StockCardProps[]): number {
+    if(watchlist.length == 0) return 0;
     var sumMcapWeighted = 0
     var sumMcap = 0
 
