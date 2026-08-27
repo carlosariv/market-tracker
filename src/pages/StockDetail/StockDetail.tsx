@@ -7,6 +7,8 @@ import './StockDetail.css'
 import CompanyProfileCard from "../../components/CompanyProfile/CompanyProfile";
 import { getQuote, type Quote } from "../../services/Quote";
 import type { StockCardProps } from "../../components/StockCard/StockCard";
+import { getCompanyNews } from "../../services/CompanyNews";
+import CompanyNewsCard from "../../components/CompanyNews/CompanyNews";
 
 function StockDetailPage() {
     // Storing and setting everything via context here
@@ -18,25 +20,27 @@ function StockDetailPage() {
         watchlist,
         setWatchlist,
         loadedStocks,
+        searchCompanyNews,
+        setSearchCompanyNews
     } = useSearchResults();
 
     const [isLoading, setIsLoading] = useState(false);
     const [symbolRequested, setSymbolRequested] = useState('');
 
     useEffect(() => {
-        if (!isLoading || symbolRequested=='') {
+        if (!isLoading || symbolRequested == '') {
             return;
         }
 
         let stock: StockCardProps | undefined = loadedStocks.find((stock: StockCardProps, index: number, array: StockCardProps[]) => {
-            return stock.stockId.symbol==symbolRequested;
+            return stock.stockId.symbol == symbolRequested;
         })
 
         if (stock) {
             setSearchStockCard(stock);
             setIsLoading(false);
         }
-    }, [isLoading, loadedStocks]);
+    }, [isLoading, loadedStocks, symbolRequested]);
 
     const handleSearch = async (query: string) => {
         const listStockIds = await searchStockSymbol(query);
@@ -50,6 +54,18 @@ function StockDetailPage() {
             // requestStock(stock.symbol, 100);
             setIsLoading(true);
             setSymbolRequested(stock.symbol);
+
+            // Handling adding news to the context
+            const now = new Date();
+
+            const year: number = now.getFullYear();   // e.g., 2026
+            const month: number = now.getMonth() + 1; // 1-indexed (1-12)
+            const day: number = now.getDate();        // Day of the month (1-31)
+
+            const startDate = `${year}-${String(month).padStart(2, '0')}-${String(day-1).padStart(2, '0')}`;
+            const endDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const companyNews = await getCompanyNews(stock.symbol,startDate, endDate)
+            setSearchCompanyNews(companyNews)
         } catch (error) {
             console.log(error)
         }
@@ -100,7 +116,10 @@ function StockDetailPage() {
                         <button className="add-to-watchlist" onClick={handleAddAsset}>Add to Watchlist</button>
                     )}
 
-                    
+                    {searchCompanyNews.map((news, index) => (
+                        <CompanyNewsCard key={index} news={news} />
+                    ))}
+
                 </div>
             </div>
         </div>
