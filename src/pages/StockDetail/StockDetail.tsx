@@ -62,7 +62,7 @@ function StockDetailPage() {
             const month: number = now.getMonth() + 1; // 1-indexed (1-12)
             const day: number = now.getDate();        // Day of the month (1-31)
 
-            const startDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const startDate = `${year}-${String(month).padStart(2, '0')}-${String(day-1).padStart(2, '0')}`;
             const endDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             const companyNews = await getCompanyNews(stock.symbol,startDate, endDate)
             setSearchCompanyNews(companyNews)

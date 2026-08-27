@@ -37,8 +37,8 @@ type StockSearchType = {
     // Last searched Company News
     searchCompanyNews: CompanyNews[]
 
-    // Last searched Market news
-    searchMarketNews: MarketNews[]
+    // Last searched Market news, [category][market news list]
+    searchMarketNews: Record<string, MarketNews[]>
 
     setSearchResultsContext: React.Dispatch<React.SetStateAction<stockId[]>>;
     setSearchStockCard: React.Dispatch<React.SetStateAction<StockCardProps | undefined>>;
@@ -46,8 +46,8 @@ type StockSearchType = {
     setWatchlist: React.Dispatch<React.SetStateAction<StockCardProps[]>>;
     setStockQueue: React.Dispatch<React.SetStateAction<string[]>>;
     setLoadedStocks: React.Dispatch<React.SetStateAction<StockCardProps[]>>;
-    setSearchCompanyNews: React.Dispatch<React.SetStateAction<CompanyNews[]>>
-    setSearchMarketNews: React.Dispatch<React.SetStateAction<MarketNews[]>>
+    setSearchCompanyNews: React.Dispatch<React.SetStateAction<CompanyNews[]>>;
+    setSearchMarketNews: React.Dispatch<React.SetStateAction<Record<string, MarketNews[]>>>;
 };
 
 const StockSearchContext = createContext<StockSearchType | undefined>(
@@ -66,7 +66,7 @@ export function SearchResultsProvider({
     const [stockCardMarkets, setStockCardMarkets] = useState<Record<string, StockCardProps[]>>({});
     const [watchlist, setWatchlist] = useState<StockCardProps[]>([])
     const [searchCompanyNews, setSearchCompanyNews] = useState<CompanyNews[]>([])
-    const [searchMarketNews, setSearchMarketNews] = useState<MarketNews[]>([])
+    const [searchMarketNews, setSearchMarketNews] = useState<Record<string, MarketNews[]>>({})
 
     const [symbolQueue, setSymbolQueue] = useState<string[]>(defaultSymbols);
     const [loadedStocks, setLoadedStocks] = useState<StockCardProps[]>([]);
