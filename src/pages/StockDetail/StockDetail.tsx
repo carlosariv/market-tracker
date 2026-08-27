@@ -17,9 +17,7 @@ function StockDetailPage() {
         setSearchStockCard,
         watchlist,
         setWatchlist,
-        requestStock,
         loadedStocks,
-        symbolQueue
     } = useSearchResults();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +36,7 @@ function StockDetailPage() {
             setSearchStockCard(stock);
             setIsLoading(false);
         }
-    }, [isLoading, loadedStocks, symbolQueue]);
+    }, [isLoading, loadedStocks]);
 
     const handleSearch = async (query: string) => {
         const listStockIds = await searchStockSymbol(query);
@@ -49,7 +47,7 @@ function StockDetailPage() {
     // Making each item on the list a clickable item
     const handleCompanyClick = async (stock: stockId) => {
         try {
-            requestStock(stock.symbol, 100);
+            // requestStock(stock.symbol, 100);
             setIsLoading(true);
             setSymbolRequested(stock.symbol);
         } catch (error) {
