@@ -4,6 +4,7 @@ import type { StockCardProps } from "../components/StockCard/StockCard";
 import { searchCompanyProfile } from "../services/CompanyProfile";
 import { getQuote } from "../services/Quote";
 import type { CompanyNews } from "../services/CompanyNews";
+import type { MarketNews } from "../services/MarketNews";
 
 const defaultSymbols: string[] = [
     "AAPL", "MSFT", "NVDA", "GOOGL", "META", "AMZN", "AVGO", "ORCL", "AMD", "CRM", "PLTR",
@@ -36,6 +37,9 @@ type StockSearchType = {
     // Last searched Company News
     searchCompanyNews: CompanyNews[]
 
+    // Last searched Market news
+    searchMarketNews: MarketNews[]
+
     setSearchResultsContext: React.Dispatch<React.SetStateAction<stockId[]>>;
     setSearchStockCard: React.Dispatch<React.SetStateAction<StockCardProps | undefined>>;
     setStockCardMarkets: React.Dispatch<React.SetStateAction<Record<string, StockCardProps[]>>>;
@@ -43,6 +47,7 @@ type StockSearchType = {
     setStockQueue: React.Dispatch<React.SetStateAction<string[]>>;
     setLoadedStocks: React.Dispatch<React.SetStateAction<StockCardProps[]>>;
     setSearchCompanyNews: React.Dispatch<React.SetStateAction<CompanyNews[]>>
+    setSearchMarketNews: React.Dispatch<React.SetStateAction<MarketNews[]>>
 };
 
 const StockSearchContext = createContext<StockSearchType | undefined>(
@@ -61,6 +66,7 @@ export function SearchResultsProvider({
     const [stockCardMarkets, setStockCardMarkets] = useState<Record<string, StockCardProps[]>>({});
     const [watchlist, setWatchlist] = useState<StockCardProps[]>([])
     const [searchCompanyNews, setSearchCompanyNews] = useState<CompanyNews[]>([])
+    const [searchMarketNews, setSearchMarketNews] = useState<MarketNews[]>([])
 
     const [symbolQueue, setSymbolQueue] = useState<string[]>(defaultSymbols);
     const [loadedStocks, setLoadedStocks] = useState<StockCardProps[]>([]);
@@ -128,7 +134,9 @@ export function SearchResultsProvider({
                 stockQueue: symbolQueue,
                 setStockQueue: setSymbolQueue,
                 searchCompanyNews,
-                setSearchCompanyNews
+                setSearchCompanyNews,
+                searchMarketNews,
+                setSearchMarketNews
             }}
         >
             {children}
