@@ -35,8 +35,10 @@ function StockDetailPage() {
     }
 
     const handleAddAsset = () => {
-        // const stockCardProps = {stockId: }
-        // setWatchlist(prev => ({...prev, }))
+        if(searchStockCard){
+            setWatchlist(prev => ({...prev, searchStockCard}))
+        }
+        
     }
 
     return (

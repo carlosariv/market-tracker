@@ -1,14 +1,14 @@
+import { useSearchResults } from "../../context/Context";
+import './Watchlist.css'
 
 
 
 
+export default function Watchlist() {
+    const { watchlist } = useSearchResults();
 
-export default function Watchlist(){
+    return (
 
-
-    return(
-        <div className="card-grid">
-            
-        </div>
+         <div className="card-grid"></div>
     )
 }
