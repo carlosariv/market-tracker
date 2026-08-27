@@ -3,6 +3,7 @@ import type { stockId } from "../services/SymbolLookup";
 import type { StockCardProps } from "../components/StockCard/StockCard";
 import { searchCompanyProfile } from "../services/CompanyProfile";
 import { getQuote } from "../services/Quote";
+import type { CompanyNews } from "../services/CompanyNews";
 
 const defaultSymbols: string[] = [
     "AAPL", "MSFT", "NVDA", "GOOGL", "META", "AMZN", "AVGO", "ORCL", "AMD", "CRM", "PLTR",
@@ -31,6 +32,12 @@ type StockSearchType = {
     loadedStocks: StockCardProps[];
     // Queue for stock symbols to be loaded
     stockQueue: string[];
+
+
+
+
+    // Store company news
+    searchCompanyNews: CompanyNews[]
 
     requestStock : (symbol: string, priority: number) => void;
     setSearchResultsContext: React.Dispatch<React.SetStateAction<stockId[]>>;
@@ -148,7 +155,9 @@ export function SearchResultsProvider({
                 loadedStocks,
                 setLoadedStocks,
                 stockQueue: symbolQueue,
-                setStockQueue: setSymbolQueue
+                setStockQueue: setSymbolQueue,
+                searchCompanyNews,
+                setSearchCompanyNews
             }}
         >
             {children}
