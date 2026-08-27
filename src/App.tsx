@@ -8,6 +8,7 @@ import StockDetailPage from './pages/StockDetail/StockDetail'
 import "./styles/main.css"
 import { AuthProvider, useAuth } from './components/AuthContext'
 import RegisterPage from './pages/login/RegisterPage'
+import Watchlist from './pages/Portfolio/Watchlist'
 
 // Auth gate + shared chrome in one layout route.
 // Renders for any child route that matches; <Outlet/> is where the page lands.
@@ -41,6 +42,7 @@ function App() {
               {/* <Route path="/markets" element={<TrackerPage />} /> */}
               <Route path="/markets" element={<TrackerPage />} />
               <Route path="/stocks" element={<StockDetailPage />} />
+              <Route path="/watchlist" element={<Watchlist />} />
             </Route>
 
             {/* Unknown URLs bounce to the app (or to /login if not authed) */}
