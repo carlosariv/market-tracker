@@ -198,7 +198,7 @@ export function TrackerPageV2() {
         <div>
             <div className="market-overview">
                 <span style={{ fontWeight: 600, fontSize: "24px" }}>Market Overview</span>
-                <span>API BUDGET 18/60 this minute</span>
+                {/* <span>API BUDGET 18/60 this minute</span> */}
             </div>
 
             <div className="filter-heading">

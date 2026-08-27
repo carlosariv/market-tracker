@@ -70,6 +70,10 @@ export default function Watchlist() {
     return (
 
         <div className="watchlist">
+            <div style={{ padding: "40px 40px 0" }}>
+                <span style={{ fontWeight: 600, fontSize: "24px" }}>Watchlist</span>
+            </div>
+
             <div className="portfolio-analysis">
                 <div className="stat">
                     <span className="stat-label">Equal Weight P&L</span>

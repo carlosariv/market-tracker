@@ -50,37 +50,43 @@ function StockDetailPage() {
     }
 
     return (
-        <div className="stock-detail-layout">
-            <div className="stock-detail-left">
-                <SearchBar
-                    placeholder={"Apple"}
-                    onSearch={handleSearch}
-                />
-
-                <ul className="stock-search-list">
-                    {searchResultsContext.map((stock, index) => (
-                        <li
-                            className="stock-search-list-item"
-                            key={index}
-                            onClick={() => handleCompanyClick(stock)}
-                        >
-                            {stock.description} {stock.symbol}
-                        </li>
-                    ))}
-                </ul>
+        <div>
+            <div style={{ padding: "40px 40px 0" }}>
+                <span style={{ fontWeight: 600, fontSize: "24px" }}>Company Profile Search</span>
             </div>
 
-            <div className="stock-detail-right">
-                {searchStockCard ? (
-                    <CompanyProfileCard
-                        companyProfile={searchStockCard.companyProfile}
-                        quote={searchStockCard.quote}
+            <div className="stock-detail-layout">
+                <div className="stock-detail-left">
+                    <SearchBar
+                        placeholder={"Apple"}
+                        onSearch={handleSearch}
                     />
-                ) : (<p className="profile-empty">Select a stock from the list to view its profile.</p>)}
 
-                {searchStockCard && (
-                    <button className="add-to-watchlist" onClick={handleAddAsset}>Add to Watchlist</button>
-                )}
+                    <ul className="stock-search-list">
+                        {searchResultsContext.map((stock, index) => (
+                            <li
+                                className="stock-search-list-item"
+                                key={index}
+                                onClick={() => handleCompanyClick(stock)}
+                            >
+                                {stock.description} {stock.symbol}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div className="stock-detail-right">
+                    {searchStockCard ? (
+                        <CompanyProfileCard
+                            companyProfile={searchStockCard.companyProfile}
+                            quote={searchStockCard.quote}
+                        />
+                    ) : (<p className="profile-empty">Select a stock from the list to view its profile.</p>)}
+
+                    {searchStockCard && (
+                        <button className="add-to-watchlist" onClick={handleAddAsset}>Add to Watchlist</button>
+                    )}
+                </div>
             </div>
         </div>
     );
