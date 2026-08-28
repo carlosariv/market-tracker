@@ -48,28 +48,27 @@ export function StockCardCompanyProfile({companyProfile,quote }:StockCardProps){
                 <>
                     <div className="profile-header">
                         <img src={companyProfile.logo} alt={`${companyProfile.name} logo`} />
-                        <div>
-                            <h2>{companyProfile.name}</h2>
-                            <span className="profile-ticker">
-                                {companyProfile.ticker} · {companyProfile.exchange}
-                            </span>
-                        </div>
-                        {quote && (
-                            <div className="quote-current">
-                                <div className="quote-price">
-                                    ${quote.c.toFixed(2)}
-                                </div>
-
-                                <div className={`quote-change ${quote.d >= 0 ? "positive" : "negative"}`}>
-                                    {quote.d >= 0 ? "+" : ""}
-                                    {quote.d.toFixed(2)}
-                                    {" "}
-                                    ({quote.dp >= 0 ? "+" : ""}
-                                    {quote.dp.toFixed(2)}%)
-                                </div>
-                            </div>
-                        )}
+                        <h2>{companyProfile.name}</h2>
                     </div>
+
+                    <h2 className="profile-ticker">
+                        {companyProfile.ticker} · {companyProfile.exchange}
+                    </h2>
+                    {quote && (
+                        <div className="quote-current">
+                            <div className="quote-price">
+                                <span>${quote.c.toFixed(2)}</span>
+                            </div>
+
+                            <div className={`quote-change ${quote.d >= 0 ? "positive" : "negative"}`}>
+                                {quote.d >= 0 ? "+" : ""}
+                                {quote.d.toFixed(2)}
+                                {" "}
+                                ({quote.dp >= 0 ? "+" : ""}
+                                {quote.dp.toFixed(2)}%)
+                            </div>
+                        </div>
+                    )}
 
                     <dl className="profile-grid">
                         <div>
