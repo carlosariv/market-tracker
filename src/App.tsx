@@ -38,14 +38,14 @@ function App() {
 
             {/* Everything below requires auth and gets shared chrome */}
             <Route element={<ProtectedLayout />}>
-              {/* <Route path="/markets" element={<TrackerPage />} /> */}
-              <Route path="/markets" element={<TrackerPage />} />
+              <Route path="/" element={<Navigate to="/markets" replace />} />
+              <Route path="/markets" element={<TrackerPage />}/>
               <Route path="/stocks" element={<StockDetailPage />} />
               <Route path="/watchlist" element={<Watchlist />} />
             </Route>
 
             {/* Unknown URLs bounce to the app (or to /login if not authed) */}
-            <Route path="*" element={<Navigate to="/login" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
       </div>

@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
-
 interface AuthContextType {
     isAuthenticated: boolean;
     login: (username: string, password: string) => boolean;
@@ -20,17 +19,15 @@ interface AuthProviderProps {
 }
 
 function AuthProvider({children} : AuthProviderProps) {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        return sessionStorage.getItem('isAuthenticated') === 'true';
+    });
 
     function login(username: string, password: string) : boolean {
-        if (username == "admin" && password == "admin") {
-            setIsAuthenticated(true);
-            return true;
-        }
-
-        let storedUser = localStorage.getItem("username");
-        let storedPass = localStorage.getItem("password");
+        let storedUser = localStorage.getItem('username');
+        let storedPass = localStorage.getItem('password');
         if (storedUser == username && password == storedPass) {
+            sessionStorage.setItem('isAuthenticated', 'true');
             setIsAuthenticated(true);
             return true;
         }
@@ -40,6 +37,7 @@ function AuthProvider({children} : AuthProviderProps) {
 
     function logout() {
         setIsAuthenticated(false);
+        sessionStorage.setItem('isAuthenticated', 'false');
     }
 
     return (
