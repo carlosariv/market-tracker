@@ -5,6 +5,7 @@ import { searchCompanyProfile } from "../services/CompanyProfile";
 import { getQuote } from "../services/Quote";
 import type { CompanyNews } from "../services/CompanyNews";
 import type { MarketNews } from "../services/MarketNews";
+import { PriorityQueue } from "@datastructures-js/priority-queue";
 
 const defaultSymbols: string[] = [
     "AAPL", "MSFT", "NVDA", "GOOGL", "META", "AMZN", "AVGO", "ORCL", "AMD", "CRM", "PLTR",
@@ -14,6 +15,11 @@ const defaultSymbols: string[] = [
     "WMT", "COST", "HD", "MCD", "NKE", "SBUX", "TGT", "LOW", "KO", "PEP",
     "GE", "CAT", "DE", "HON", "UPS", "RTX", "BA", "LMT", "UNP", "ETN"
 ];
+
+type SymbolRequest = {
+    symbol: string;
+    priority: number;
+}
 
 // Stock Search Context
 type StockSearchType = {
@@ -32,7 +38,7 @@ type StockSearchType = {
 
     loadedStocks: StockCardProps[];
     // Queue for stock symbols to be loaded
-    stockQueue: string[];
+    symbolQueue: PriorityQueue<SymbolRequest>;
 
     // Last searched Company News
     searchCompanyNews: CompanyNews[]
@@ -40,11 +46,11 @@ type StockSearchType = {
     // Last searched Market news, [category][market news list]
     searchMarketNews: Record<string, MarketNews[]>
 
+    requestStock : (symbol: string, priority: number) => void;
     setSearchResultsContext: React.Dispatch<React.SetStateAction<stockId[]>>;
     setSearchStockCard: React.Dispatch<React.SetStateAction<StockCardProps | undefined>>;
     setStockCardMarkets: React.Dispatch<React.SetStateAction<Record<string, StockCardProps[]>>>;
     setWatchlist: React.Dispatch<React.SetStateAction<StockCardProps[]>>;
-    setStockQueue: React.Dispatch<React.SetStateAction<string[]>>;
     setLoadedStocks: React.Dispatch<React.SetStateAction<StockCardProps[]>>;
     setSearchCompanyNews: React.Dispatch<React.SetStateAction<CompanyNews[]>>;
     setSearchMarketNews: React.Dispatch<React.SetStateAction<Record<string, MarketNews[]>>>;
@@ -59,8 +65,6 @@ export function SearchResultsProvider({
 }: {
     children: React.ReactNode;
 }) {
-
-
     const [searchResultsContext, setSearchResultsContext] = useState<stockId[]>([]);
     const [searchStockCard, setSearchStockCard] = useState<StockCardProps>();
     const [stockCardMarkets, setStockCardMarkets] = useState<Record<string, StockCardProps[]>>({});
@@ -68,55 +72,70 @@ export function SearchResultsProvider({
     const [searchCompanyNews, setSearchCompanyNews] = useState<CompanyNews[]>([])
     const [searchMarketNews, setSearchMarketNews] = useState<Record<string, MarketNews[]>>({})
 
-    const [symbolQueue, setSymbolQueue] = useState<string[]>(defaultSymbols);
-    const [loadedStocks, setLoadedStocks] = useState<StockCardProps[]>([]);
+    const processingRef = useRef(false);
     const [processing, setProcessing] = useState<boolean>(false);
+    const [queueVersion, setQueueVersion] = useState(0);
+    const symbolQueue = useRef(
+        new PriorityQueue<SymbolRequest>(
+            (a: SymbolRequest, b: SymbolRequest) => {
+                return b.priority - a.priority;
+            },
+            defaultSymbols.map((s: string) => { return { symbol: s, priority: 1 } })
+        )
+    );
 
-    const queueRef = useRef(symbolQueue);
-    queueRef.current = symbolQueue;
+    const [loadedStocks, setLoadedStocks] = useState<StockCardProps[]>([]);
 
-    useEffect(() => {
-        queueRef.current = symbolQueue;
-    });
-
-    const loadStockNext = useCallback(async () => {
-        if (queueRef.current.length == 0) {
-            console.log('queue finished');
-            setProcessing(false);
+    function requestStock(symbol: string, priority: number = 0) {
+        //NOTE: Don't load a stock if already loaded
+        if (loadedStocks.some((stock: StockCardProps, index: number, array: StockCardProps[]) => stock.stockId.symbol == symbol)) {
             return;
         }
 
+        symbolQueue.current.push({symbol, priority});
+        setQueueVersion(prev => prev + 1);
+    }
+
+    const loadStockNext = useCallback(async () => {
+        if (processingRef.current) {
+            return;
+        }
+
+        if (symbolQueue.current.isEmpty()) {
+            return;
+        }
+
+        processingRef.current = true;
         setProcessing(true);
-        const symbol = queueRef.current[0];
+        const symbolReq = symbolQueue.current.front()!;
 
-        console.log(`processing: ${symbol}`);
-        console.log('queue before: ', queueRef.current);
+        try {
+            symbolQueue.current.pop();
 
-        let stockCard: StockCardProps = {
-            stockId: { description: "", displaySymbol: "", symbol: symbol, type: "" },
-            companyProfile: await searchCompanyProfile(symbol),
-            quote: await getQuote(symbol),
-        };
+            let stockCard: StockCardProps = {
+                stockId: { description: "", displaySymbol: "", symbol: symbolReq.symbol, type: "" },
+                companyProfile: await searchCompanyProfile(symbolReq.symbol),
+                quote: await getQuote(symbolReq.symbol)
+            };
 
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+            //NOTE: Delay only if priority is low
+            if (symbolReq.priority < 10) {
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+            }
 
-        setLoadedStocks(prev => [...prev, stockCard]);
-        setSymbolQueue(prevQueue => prevQueue.slice(1));
-        setProcessing(false);
-
-        console.log('finished');
+            setLoadedStocks(prev => [...prev, stockCard]);
+        } catch (e) {
+        } finally {
+            processingRef.current = false;
+            setProcessing(false);
+        }
     }, []);
 
     useEffect(() => {
-        console.log('checking the queue for processing?')
-        if (symbolQueue.length > 0 && !processing) {
+        if (!symbolQueue.current.isEmpty()) {
             loadStockNext();
         }
-        console.log('done checking the queue for processing?')
-
-        console.log(loadedStocks);
-    }, [symbolQueue.length, processing, loadStockNext]);
-
+    }, [processing, queueVersion, loadStockNext]);
 
     return (
         <StockSearchContext.Provider
@@ -131,8 +150,8 @@ export function SearchResultsProvider({
                 setWatchlist,
                 loadedStocks,
                 setLoadedStocks,
-                stockQueue: symbolQueue,
-                setStockQueue: setSymbolQueue,
+                requestStock,
+                symbolQueue: symbolQueue.current,
                 searchCompanyNews,
                 setSearchCompanyNews,
                 searchMarketNews,
