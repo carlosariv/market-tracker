@@ -47,7 +47,7 @@ export default function LoginPage() {
 
         <button type="submit">Log in</button>
 
-        <p>Don't have a login?<Link to='/register' style={{ display: "inline" }}>Register now</Link></p>
+        <p>Don't have an account?<Link to='/register' style={{ display: "inline" }}>Register now</Link></p>
       </form>
     </div>
     

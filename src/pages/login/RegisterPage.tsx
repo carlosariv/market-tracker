@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import './LoginPage.css'
 import { useAuth } from "../../components/AuthContext";
 
@@ -97,6 +97,9 @@ export default function RegisterPage() {
         {error && <p className="error">{error}</p>}
 
         <button type="submit">Log in</button>
+
+        <p>Already have an account?<Link to='/login' style={{ display: "inline" }}>Login now</Link></p>
+
       </form>
     </div>
 
