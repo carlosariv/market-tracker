@@ -31,9 +31,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route element={<Navbar />}>
-
-              <Route path="/register" element={<RegisterPage />} />
               <Route path="/logout" element={<div></div>} />
             </Route>
 

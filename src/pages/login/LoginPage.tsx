@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import './LoginPage.css'
 import { useAuth } from "../../components/AuthContext";
 
@@ -24,29 +24,31 @@ export default function LoginPage() {
 
   return (
     <div className="form-container">
-        <form className = 'login-form' onSubmit={handleSubmit}>
-      <h1>Login</h1>
+      <form className='login-form' onSubmit={handleSubmit}>
+        <h1>Login</h1>
 
-      <label htmlFor="username">Username:</label>
-      <input
-        type="text"
-        id="username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
-      <label htmlFor="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      {error && <p className="error">{error}</p>}
+        {error && <p className="error">{error}</p>}
 
-      <button type="submit">Log in</button>
-    </form>
+        <button type="submit">Log in</button>
+
+        <p>Don't have a login?<Link to='/register' style={{ display: "inline" }}>Register now</Link></p>
+      </form>
     </div>
     
   );
