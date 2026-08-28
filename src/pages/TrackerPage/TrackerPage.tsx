@@ -74,7 +74,59 @@ export function TrackerPage() {
 
     return (
         <div>
-            <div className="market-overview">
+            <section className="market-header">
+
+                {/* Title */}
+                <div className="market-overview">
+                    <h1>Market Overview</h1>
+
+                    <span className="api-budget">
+                        API Budget{" "}
+                        <strong>{18}</strong>
+                    </span>
+                </div>
+
+                {/* Filters + Sorting */}
+                <div className="filter-heading">
+
+                    <div className="filter-categories">
+                        {filterCategories.map((category) => (
+                            <button
+                                type="button"
+                                className={`filter-btn ${filterCategory === category
+                                        ? "active-filter"
+                                        : ""
+                                    }`}
+                                key={category}
+                                onClick={() => setFilterCategory(category)}
+                            >
+                                {category}
+                            </button>
+                        ))}
+                    </div>
+
+                    <label className="sort-container">
+                        <select
+                            name="stock-sort"
+                            id="stock-sort-select"
+                            value={sortOption}
+                            onChange={(e) => setSortOption(e.target.value)}
+                            aria-label="Sort stocks"
+                        >
+                            {sortOptions.map((option) => (
+                                <option value={option} key={option}>
+                                    Sort: {option}
+                                </option>
+                            ))}
+                        </select>
+
+                        <span className="sort-arrow">⌄</span>
+                    </label>
+
+                </div>
+            </section>
+
+            {/* <div className="market-overview">
                 <span style={{ fontWeight: 600, fontSize: "24px" }}>Market Overview</span>
                 <span>API BUDGET 18/60 this minute</span>
             </div>
@@ -112,7 +164,7 @@ export function TrackerPage() {
                         sortOptions.map((opt) => <option value={opt} key={opt}>Sort: {opt}</option>)
                     };
                 </select>
-            </div>
+            </div> */}
 
             <div className="card-grid">
                 {
@@ -123,9 +175,7 @@ export function TrackerPage() {
 
             </div>
 
-            <MarketNewsBlock category={filterCategory} />
-
-            <div className="d-center">
+            <div className="pagination-container">
                 <button 
                     className="btn"
                     onClick={(e) => {
@@ -156,6 +206,8 @@ export function TrackerPage() {
                     }
                  }> R </button>
             </div>
+
+            <MarketNewsBlock category={filterCategory} />
             
         </div>
     )

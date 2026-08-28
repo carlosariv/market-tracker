@@ -1,3 +1,190 @@
+/* =========================
+   Market Overview
+   ========================= */
+
+.market-header {
+    padding: 28px 36px 0;
+}
+
+/* Title + API budget */
+
+.market-overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.market-overview h1 {
+    margin: 0;
+    color: #172033;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.api-budget {
+    color: #718096;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.api-budget strong {
+    color: #159a88;
+    font-weight: 700;
+}
+
+
+/* =========================
+   Filter Bar
+   ========================= */
+
+.filter-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.filter-categories {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+
+/* Filter buttons */
+
+.filter-btn {
+    border: 1px solid #e3e9ee;
+    background: rgba(255, 255, 255, 0.8);
+
+    color: #526174;
+
+    padding: 9px 17px;
+
+    border-radius: 999px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.15s ease;
+}
+
+.filter-btn:hover {
+    border-color: #b9dcd7;
+    color: #087f70;
+    background: #f7fbfa;
+}
+
+.filter-btn:active {
+    transform: scale(0.97);
+}
+
+
+/* Active filter */
+
+.filter-btn.active-filter {
+    border-color: #159a88;
+    background: linear-gradient(
+        135deg,
+        #159a88,
+        #087f70
+    );
+
+    color: white;
+
+    box-shadow:
+        0 4px 10px rgba(21, 154, 136, 0.18);
+}
+
+.filter-btn.active-filter:hover {
+    background: linear-gradient(
+        135deg,
+        #159a88,
+        #087f70
+    );
+
+    color: white;
+}
+
+
+/* =========================
+   Sort
+   ========================= */
+
+.sort-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+#stock-sort-select {
+    appearance: none;
+    -webkit-appearance: none;
+
+    height: 40px;
+
+    min-width: 155px;
+
+    padding: 0 38px 0 15px;
+
+    border: 1px solid #e3e9ee;
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    color: #526174;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#stock-sort-select:hover {
+    border-color: #b9dcd7;
+}
+
+#stock-sort-select:focus {
+    border-color: #159a88;
+
+    box-shadow:
+        0 0 0 3px rgba(21, 154, 136, 0.1);
+}
+
+.sort-arrow {
+    position: absolute;
+
+    right: 15px;
+    top: 50%;
+
+    transform: translateY(-55%);
+
+    pointer-events: none;
+
+    color: #687789;
+
+    font-size: 15px;
+}
+
 
 .market-overview {
     display: flex;
@@ -54,4 +241,16 @@
     padding-bottom: 0px;
 
     height: 30px;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+
+.pagination-container .btn {
+    width: 48px;
+    height: 48px;
 }
