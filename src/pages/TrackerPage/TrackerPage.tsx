@@ -8,6 +8,7 @@ import "./TrackerPage.css"
 import { getPeers } from "../../services/FindPeers";
 import { searchCompanyProfile } from "../../services/CompanyProfile";
 import { useSearchResults } from "../../context/Context";
+import MarketNewsBlock from "../../components/MarketNewsBlock/MarketNewsBlock";
 
 export function TrackerPage() {
     // TODO: Make categories map to specific industries when filtering. e.g Technology emcompasses Bio-Technology.
@@ -122,6 +123,8 @@ export function TrackerPage() {
 
             </div>
 
+            <MarketNewsBlock category={filterCategory} />
+
             <div className="d-center">
                 <button 
                     className="btn"
@@ -151,8 +154,9 @@ export function TrackerPage() {
                             setCurrentPage(prev => prev + 1);
                         }
                     }
-                }> R </button>
+                 }> R </button>
             </div>
+            
         </div>
     )
 }

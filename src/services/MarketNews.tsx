@@ -19,11 +19,11 @@ export interface MarketNews {
 
 function marketNewsRequest(category: string): Promise<MarketNews[]> {
     return new Promise((resolve, reject) => {
-        finnhubClient.companyPeers(category, {}, (error: any, data:any, response:any) => {
+        finnhubClient.marketNews(category, {}, (error: any, data:any, response:any) => {
             if (error) {
                 reject(error);        
             } else {
-                resolve(data);
+                resolve(data.slice(0,6));
             }
         })
     })
