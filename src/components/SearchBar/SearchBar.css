@@ -1,0 +1,23 @@
+/* Flexbox keeps the input and button perfectly aligned */
+.search-container {
+  display: flex;
+  align-items: stretch; /* Forces both elements to match heights */
+  max-width: 400px;
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 12px; /* Controls the overall height naturally */
+  border: 1px solid #ccc;
+  border-right: none; 
+  border-radius: 4px 0 0 4px;
+}
+
+.search-btn {
+  padding: 0 20px; /* Left/right padding for button text */
+  background-color: #0e5a54;
+  color: white;
+  border: 1px solid #0e5a54;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}

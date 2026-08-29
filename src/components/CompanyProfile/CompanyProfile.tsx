@@ -44,11 +44,11 @@ export default function CompanyProfileCard({ companyProfile, quote }: CompanyPro
                         </div>
                         <div>
                             <dt>Market Cap</dt>
-                            <dd>${companyProfile.marketCapitalization.toLocaleString()}M</dd>
+                            <dd>${companyProfile.marketCapitalization?.toLocaleString()}M</dd>
                         </div>
                         <div>
                             <dt>Shares Out</dt>
-                            <dd>{companyProfile.shareOutstanding.toLocaleString()}M</dd>
+                            <dd>{companyProfile.shareOutstanding?.toLocaleString()}M</dd>
                         </div>
                         <div>
                             <dt>IPO</dt>

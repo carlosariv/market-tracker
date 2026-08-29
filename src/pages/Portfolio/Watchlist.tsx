@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { StockCardCompanyProfile, type StockCardProps } from "../../components/StockCard/StockCard";
 import { useSearchResults } from "../../context/Context";
 import './Watchlist.css'
+import type { StockCardProps } from "../../components/StockCard/StockCard";
+import StockCardCompanyProfile from "../../components/StockCard/StockCard";
 
 
 function calculateEqualWeightPL(watchlist: StockCardProps[]): number {
@@ -72,8 +73,8 @@ export default function Watchlist() {
     return (
 
         <div className="watchlist">
-            <div style={{ padding: "40px 40px 0" }}>
-                <span style={{ fontWeight: 600, fontSize: "24px" }}>Watchlist</span>
+            <div className='page-header page-heading'>
+                <h1>Watchlist</h1>
             </div>
 
             <div className="portfolio-analysis">
@@ -92,13 +93,13 @@ export default function Watchlist() {
                 <div className="stat">
                     <span className="stat-label">Best Perfomer</span>
                     <span className={`stat-value`}>
-                        {bestPerformer ? bestPerformer.stockId.symbol: "Portofolio is empty"}
+                        {bestPerformer ? bestPerformer.stockId.symbol: "N/A"}
                     </span>
                 </div>
                 <div className="stat">
                     <span className="stat-label">Worst Perfomer</span>
                     <span className={`stat-value`}>
-                        {worstPerformer ? worstPerformer.stockId.symbol  : "Portofolio is empty"}
+                        {worstPerformer ? worstPerformer.stockId.symbol  : "N/A"}
                     </span>
                 </div>
             </div>

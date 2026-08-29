@@ -29,6 +29,7 @@ function companyProfileRequest(query: string): Promise<CompanyProfile> {
     return new Promise((resolve, reject) => {
         finnhubClient.companyProfile2({symbol :query} , (error: any, data: any, response: any) => {
             if (error) {
+                console.log(error);
                 reject(error);        // error path -> becomes a rejection
             } else {
                 resolve(data as CompanyProfile);        // success path -> becomes a resolved value
@@ -40,7 +41,6 @@ function companyProfileRequest(query: string): Promise<CompanyProfile> {
 export async function searchCompanyProfile(query: string): Promise<CompanyProfile> {
     try {
         const data = await companyProfileRequest(query)
-
         return data
     } catch (error) {
         throw error

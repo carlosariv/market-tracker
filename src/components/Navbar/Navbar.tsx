@@ -2,7 +2,7 @@ import { useAuth } from '../AuthContext';
 import './Navbar.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 
-import sampleLogo from '../../assets/hero.png';
+import logo from '../../assets/logo.png'
 
 export default function Navbar() {
   const { isAuthenticated, logout } = useAuth();
@@ -26,13 +26,13 @@ export default function Navbar() {
           {/* Brand */}
           <Link to="/markets" className="navbar-brand">
             <img
-              src={sampleLogo}
-              alt="Market Tracker Logo"
+              src={logo}
+              alt="Market Watch Logo"
               className="nav-logo-image"
             />
 
             <div className="brand-text">
-              <span className="brand-name">Market Tracker</span>
+              <span className="brand-name">Market Watch</span>
             </div>
           </Link>
 
@@ -93,23 +93,23 @@ export default function Navbar() {
         <div className="footer-content">
 
           <div className="footer-brand">
-            <span className="footer-title">Market Tracker</span>
+            <span className="footer-title">Market Watch</span>
             <span className="footer-description">
               Track markets. Follow stocks. Stay informed.
             </span>
           </div>
 
           <div className="footer-links">
-            <Link to="/privacy">Privacy</Link>
-            <Link to="/terms">Terms</Link>
-            <Link to="/api-docs">API Docs</Link>
-            <Link to="/contact">Contact</Link>
+            <span>Privacy</span>
+            <span>Terms</span>
+            <span>API Docs</span>
+            <span>Contact</span>
           </div>
 
         </div>
 
         <div className="footer-bottom">
-          <span>© 2026 Market Tracker. All rights reserved.</span>
+          <span>© 2026 Market Watch. All rights reserved.</span>
           <span>Market data provided by third-party APIs.</span>
         </div>
       </footer>
