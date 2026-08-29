@@ -21,11 +21,16 @@ function StockDetailPage() {
         setWatchlist,
         loadedStocks,
         searchCompanyNews,
-        setSearchCompanyNews
+        setSearchCompanyNews,
+        requestStock
     } = useSearchResults();
 
     const [isLoading, setIsLoading] = useState(false);
     const [symbolRequested, setSymbolRequested] = useState('');
+
+    const isListed = searchStockCard && watchlist.some((v: StockCardProps) => {
+        return v.stockId.symbol == searchStockCard.stockId.symbol;
+    });
 
     useEffect(() => {
         if (!isLoading || symbolRequested == '') {
@@ -36,11 +41,11 @@ function StockDetailPage() {
             return stock.stockId.symbol == symbolRequested;
         })
 
-        if (stock) {
+        if (stock && stock.companyProfile && stock.quote) {
             setSearchStockCard(stock);
             setIsLoading(false);
         }
-    }, [isLoading, loadedStocks, symbolRequested]);
+    }, [isLoading, loadedStocks, symbolRequested, watchlist]);
 
     const handleSearch = async (query: string) => {
         const listStockIds = await searchStockSymbol(query);
@@ -51,7 +56,7 @@ function StockDetailPage() {
     // Making each item on the list a clickable item
     const handleCompanyClick = async (stock: stockId) => {
         try {
-            // requestStock(stock.symbol, 100);
+            requestStock(stock.symbol, 100);
             setIsLoading(true);
             setSymbolRequested(stock.symbol);
 
@@ -75,13 +80,20 @@ function StockDetailPage() {
         if (searchStockCard && !watchlist.includes(searchStockCard)) {
             setWatchlist([...watchlist, searchStockCard])
         }
-        console.log(watchlist)
-    }
+    };
+
+    const handleRemoveAsset = () => {
+        if (searchStockCard) {
+            setWatchlist(watchlist.filter((v: StockCardProps) => {
+                return v.stockId.symbol != searchStockCard.stockId.symbol;
+            }));
+        }
+    };
 
     return (
         <div>
-            <div style={{ padding: "40px 40px 0" }}>
-                <span style={{ fontWeight: 600, fontSize: "24px" }}>Company Profile Search</span>
+            <div className='page-heading page-header'>
+                <h1>Company Profile Search</h1>
             </div>
 
             <div className="stock-detail-layout">
@@ -112,8 +124,12 @@ function StockDetailPage() {
                         />
                     ) : (<p className="profile-empty">Select a stock from the list to view its profile.</p>)}
 
-                    {searchStockCard && (
-                        <button className="add-to-watchlist" onClick={handleAddAsset}>Add to Watchlist</button>
+                    {searchStockCard && !isListed && (
+                        <button className="watchlist-btn add" onClick={handleAddAsset}>Add to Watchlist</button>
+                    )}
+
+                    {searchStockCard && isListed && (
+                        <button className="watchlist-btn remove" onClick={handleRemoveAsset}>Remove from Watchlist</button>
                     )}
 
                     {searchCompanyNews.map((news, index) => (
