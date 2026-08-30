@@ -1,7 +1,9 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vitest/config";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+    test: {
+        environment: "jsdom",
+        setupFiles: ["./test-setup.ts", './src/tests/setup.ts', 'vitest-localstorage-mock'],   // setUp Files is used for '@testing-library/jest-dom'
+        globals: true
+    },
+});

@@ -32,7 +32,6 @@ function marketNewsRequest(category: string): Promise<MarketNews[]> {
 export async function getMarketNews(category:string): Promise<MarketNews[]> {
      try {
         const data = await marketNewsRequest(category)
-        console.log(data)
         return data
     } catch (error) {
         console.error('Quote search failed:', error);

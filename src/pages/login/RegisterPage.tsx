@@ -72,6 +72,7 @@ export default function RegisterPage() {
 
         <label htmlFor="username">Username:</label>
         <input
+          name='username'
           type="text"
           id="username"
           value={username}
@@ -80,23 +81,25 @@ export default function RegisterPage() {
 
         <label htmlFor="password">Password:</label>
         <input
+          name='password'
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <label htmlFor="password confirmation">Confirm Password:</label>
+        <label htmlFor="password-confirmation">Confirm Password:</label>
         <input
+          name='password-confirmation'
           type="password"
           id="password-confirmation"
           value={passwordConfirmation}
           onChange={(e) => setPasswordConfirmation(e.target.value)}
         />
 
-        {error && <p className="error">{error}</p>}
+        {error && <p className="error" data-testid='error-message'>{error}</p>}
 
-        <button type="submit">Log in</button>
+        <button name="log in" type="submit">Log in</button>
 
         <p>Already have an account?<Link to='/login' style={{ display: "inline" }}>Login now</Link></p>
 

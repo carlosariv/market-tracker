@@ -26,7 +26,6 @@ function companyNewsRequest(symbol: string, startDate: string, endDate: string):
             if (error) {
                 reject(error);
             } else {
-                console.log(data)
                 resolve(data);
             }
         })
@@ -36,7 +35,6 @@ function companyNewsRequest(symbol: string, startDate: string, endDate: string):
 export async function getCompanyNews(symbol: string, startDate: string, endDate: string): Promise<CompanyNews[]> {
     try {
         const data = await companyNewsRequest(symbol, startDate, endDate)
-        console.log(data)
         return data
     } catch (error) {
         console.error('Company news search failed:', error);
