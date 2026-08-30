@@ -65,7 +65,7 @@ Swap these if Carlos's machine is the one that runs the app more reliably — ju
 
 ---
 
-## 1:00 – 2:30 · Architecture — **Sergio**, then **Carlos**
+## 1:00 – 2:30 · Architecture — **Sergio**
 
 *Screen: switch to the IDE, `src/` folder expanded in the file tree.*
 
@@ -102,7 +102,7 @@ Point at the folders as you talk:
 
 ---
 
-## 2:30 – 3:15 · Demo: Auth + validation — **Sergio**
+## 2:30 – 3:15 · Demo: Auth + validation — **Carlos**
 
 *Screen: browser. Start logged out, at `/login`.*
 
